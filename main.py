@@ -449,6 +449,9 @@ def main(args):
             utils.save_on_master(
                 coco_evaluator.coco_eval["bbox"].eval, output_dir / "eval.pth"
             )
+            utils.save_on_master(
+                coco_evaluator, output_dir / "evaluator.pth"
+            )
         return
 
     print("Start training")
