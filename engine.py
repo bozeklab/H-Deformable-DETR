@@ -245,7 +245,7 @@ def evaluate(
             im = img[i]
             boxes = results[i]['boxes']
             from torchvision.utils import draw_bounding_boxes
-            im = (im * 255).clamp(0, 255)
+            im = (im * 255).clamp(0, 255).int()
             drawn_boxes = draw_bounding_boxes(im, boxes, colors="red")
 
             save_image(drawn_boxes, f'/data/pwojcik/detr_dump/img_{image_id}.png')
