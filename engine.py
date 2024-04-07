@@ -241,6 +241,7 @@ def evaluate(
         print(len(results))
         print(targets[0]["image_id"].item())
         print(results[0]['boxes'].shape)
+        print(results[0]['boxes'][-1])
         print()
         if coco_evaluator is not None:
             coco_evaluator.update(res)
