@@ -236,6 +236,8 @@ def evaluate(
             target["image_id"].item(): output
             for target, output in zip(targets, results)
         }
+        print('!!!!')
+        print(results.shape)
         if coco_evaluator is not None:
             coco_evaluator.update(res)
 
