@@ -244,7 +244,8 @@ def evaluate(
             image_id = targets[i]["image_id"].item()
             im = img[i]
             boxes = results[i]['boxes']
-            boxes = convert_to_xywh(boxes).tolist()
+            xmin, ymin, xmax, ymax = boxes.unbind(1)
+            boxes = torch.stack((xmin, ymin, xmax - xmin, ymax - ymin), dim=0)
             from torchvision.utils import draw_bounding_boxes
             im = (im * 255).clamp(0, 255).to(torch.uint8)
             drawn_boxes = draw_bounding_boxes(im, boxes, colors="red")
