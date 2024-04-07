@@ -237,8 +237,11 @@ def evaluate(
             for target, output in zip(targets, results)
         }
         print('!!!!')
-        print(target["image_id"].item())
+        print(len(targets))
+        print(len(results))
+        print(targets[0]["image_id"].item())
         print(results[0]['boxes'])
+        print()
         if coco_evaluator is not None:
             coco_evaluator.update(res)
 
