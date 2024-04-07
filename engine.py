@@ -237,6 +237,7 @@ def evaluate(
             for target, output in zip(targets, results)
         }
         print('!!!!')
+        print(samples)
         print(results[0]['boxes'])
         if coco_evaluator is not None:
             coco_evaluator.update(res)
