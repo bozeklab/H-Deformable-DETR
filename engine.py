@@ -237,7 +237,7 @@ def evaluate(
             for target, output in zip(targets, results)
         }
         print('!!!!')
-        print(samples.tensors.shape)
+        print(torch.tensor(samples.tensors).shape)
         print(len(targets))
         print(len(results))
         print(targets[0]["image_id"].item())
