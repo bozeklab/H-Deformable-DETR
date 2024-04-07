@@ -237,6 +237,8 @@ def evaluate(
             for target, output in zip(targets, results)
         }
         print('!!!!')
+        for t in samples:
+            print(t.shape)
         print(len(targets))
         print(len(results))
         print(targets[0]["image_id"].item())
