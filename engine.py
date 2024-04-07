@@ -238,18 +238,19 @@ def evaluate(
             target["image_id"].item(): output
             for target, output in zip(targets, results)
         }
-        img = torch.tensor(samples.tensors)
-        bs = img.shape[0]
-        for i in range(bs):
-            image_id = targets[i]["image_id"].item()
-            im = img[i]
-            boxes = results[i]['boxes'] * (800 / 256)
-            from torchvision.utils import draw_bounding_boxes
-            im = (im * 255).clamp(0, 255).to(torch.uint8)
-            drawn_boxes = draw_bounding_boxes(im, boxes, colors="red")
-            import torchvision.transforms.functional as TF
-            image = TF.to_pil_image(drawn_boxes)
-            image.save(f'/data/pwojcik/detr_dump/img_{image_id}.png')
+        # img = torch.tensor(samples.tensors)
+        # bs = img.shape[0]
+        # for i in range(bs):
+        #     image_id = targets[i]["image_id"].item()
+        #     im = img[i]
+        #     scores = results[i]['scores'][]
+        #     boxes = results[i]['boxes'] * (800 / 256)
+        #     from torchvision.utils import draw_bounding_boxes
+        #     im = (im * 255).clamp(0, 255).to(torch.uint8)
+        #     drawn_boxes = draw_bounding_boxes(im, boxes, colors="red")
+        #     import torchvision.transforms.functional as TF
+        #     image = TF.to_pil_image(drawn_boxes)
+        #     image.save(f'/data/pwojcik/detr_dump/img_{image_id}.png')
 
         if coco_evaluator is not None:
             coco_evaluator.update(res)
