@@ -243,8 +243,7 @@ def evaluate(
         for i in range(bs):
             image_id = targets[i]["image_id"].item()
             im = img[i]
-            boxes = results[i]['boxes']
-            print(boxes[:3])
+            boxes = results[i]['boxes'] * (800 / 256)
             from torchvision.utils import draw_bounding_boxes
             im = (im * 255).clamp(0, 255).to(torch.uint8)
             drawn_boxes = draw_bounding_boxes(im, boxes, colors="red")
