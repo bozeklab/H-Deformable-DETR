@@ -237,7 +237,7 @@ def evaluate(
             for target, output in zip(targets, results)
         }
         print('!!!!')
-        print(results.shape)
+        print(results[0].shape)
         if coco_evaluator is not None:
             coco_evaluator.update(res)
 
