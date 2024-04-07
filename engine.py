@@ -22,6 +22,8 @@ import copy
 
 import wandb
 import torch
+from torchvision.utils import save_image
+
 import util.misc as utils
 from datasets.coco_eval import CocoEvaluator
 from datasets.panoptic_eval import PanopticEvaluator
@@ -236,15 +238,16 @@ def evaluate(
             target["image_id"].item(): output
             for target, output in zip(targets, results)
         }
-        print('!!!!')
-        print(torch.tensor(samples.tensors).shape)
-        print(len(targets))
-        print(len(results))
-        print(targets[0]["image_id"].item())
-        print(results[0]['scores'].shape)
-        print(torch.max(results[0]['scores']))
-        print(torch.min(results[0]['scores']))
-        print()
+        img = torch.tensor(samples.tensors)
+        bs = img.shape[0]
+        for i in range(bs):
+            image_id = targets[i]["image_id"].item()
+            im = img[i]
+            boxes = results[i]['boxes']
+            from torchvision.utils import draw_bounding_boxes
+            drawn_boxes = draw_bounding_boxes(img, boxes, colors="red")
+            save_image(drawn_boxes, f'/data/pwojcik/detr_dump/img_{image_id}.png')
+
         if coco_evaluator is not None:
             coco_evaluator.update(res)
 
