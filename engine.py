@@ -245,8 +245,9 @@ def evaluate(
             im = img[i]
             boxes = results[i]['boxes']
             from torchvision.utils import draw_bounding_boxes
-            drawn_boxes = draw_bounding_boxes(img, boxes, colors="red")
             print(drawn_boxes)
+            drawn_boxes = draw_bounding_boxes(img, boxes, colors="red")
+
             save_image(drawn_boxes, f'/data/pwojcik/detr_dump/img_{image_id}.png')
 
         if coco_evaluator is not None:
