@@ -243,11 +243,11 @@ def evaluate(
         for i in range(bs):
             image_id = targets[i]["image_id"].item()
             im = img[i]
-            scores = results[i]['scores'][]
+            scores = results[i]['scores'] > 0.5
             boxes = results[i]['boxes'] * (800 / 256)
             from torchvision.utils import draw_bounding_boxes
             im = (im * 255).clamp(0, 255).to(torch.uint8)
-            drawn_boxes = draw_bounding_boxes(im, boxes, colors="red")
+            drawn_boxes = draw_bounding_boxes(im, boxes[scores], colors="red")
             import torchvision.transforms.functional as TF
             image = TF.to_pil_image(drawn_boxes)
             image.save(f'/data/pwojcik/detr_dump/img_{image_id}.png')
