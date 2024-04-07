@@ -25,7 +25,7 @@ import torch
 from torchvision.utils import save_image
 
 import util.misc as utils
-from datasets.coco_eval import CocoEvaluator
+from datasets.coco_eval import CocoEvaluator, convert_to_xywh
 from datasets.panoptic_eval import PanopticEvaluator
 from datasets.data_prefetcher import data_prefetcher
 
@@ -244,6 +244,7 @@ def evaluate(
             image_id = targets[i]["image_id"].item()
             im = img[i]
             boxes = results[i]['boxes']
+            boxes = convert_to_xywh(boxes).tolist()
             from torchvision.utils import draw_bounding_boxes
             im = (im * 255).clamp(0, 255).to(torch.uint8)
             drawn_boxes = draw_bounding_boxes(im, boxes, colors="red")
