@@ -202,6 +202,8 @@ def evaluate(
             output_dir=os.path.join(output_dir, "panoptic_eval"),
         )
 
+    results_all = {}
+
     for samples, targets in metric_logger.log_every(data_loader, 10, header):
         samples = samples.to(device)
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
@@ -241,12 +243,14 @@ def evaluate(
         img = torch.tensor(samples.tensors)
         bs = img.shape[0]
         for i in range(bs):
-            print(targets[i].keys())
-            image_id = targets[i]["image_id"].item()
-            print(targets[i]["labels"])
+            #print(targets[i].keys())
+            image_id = targets[i].item()
+            #print(targets[i]["labels"])
             im = img[i]
             scores = results[i]['scores'] > 0.4
             boxes = results[i]['boxes'] * (800 / 256)
+            results_all["image_id"] = (results[i]['scores'], results[i]['boxes'], results[i]['labels'])
+
             from torchvision.utils import draw_bounding_boxes
             im = (im * 255).clamp(0, 255).to(torch.uint8)
             drawn_boxes = draw_bounding_boxes(im, boxes[scores], colors="red")
