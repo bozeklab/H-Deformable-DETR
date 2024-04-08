@@ -245,10 +245,9 @@ def evaluate(
         for i in range(bs):
             #print(targets[i].keys())
             image_id = targets[i]["image_id"].item()
-            print(image_id)
             #print(targets[i]["labels"])
             im = img[i]
-            scores = results[i]['scores'] > 0.35
+            scores = results[i]['scores'] >= 0.30
             boxes = results[i]['boxes'] * (800 / 256)
             results_all.update({image_id: (results[i]['scores'], results[i]['boxes'], results[i]['labels'])})
 
@@ -257,8 +256,7 @@ def evaluate(
             drawn_boxes = draw_bounding_boxes(im, boxes[scores], colors="red")
             import torchvision.transforms.functional as TF
             image = TF.to_pil_image(drawn_boxes)
-            #image.save(f'/data/pwojcik/detr_dump/img_{image_id}.png')
-        print()
+            image.save(f'/data/pwojcik/detr_dump/img_{image_id}.png')
         if coco_evaluator is not None:
             coco_evaluator.update(res)
 
