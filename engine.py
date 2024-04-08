@@ -273,6 +273,8 @@ def evaluate(
 
             panoptic_evaluator.update(res_pano)
     import pickle
+    print('!!!')
+    print(len(results_all.keys()))
     with open('/data/pwojcik/detr_dump/results.pkl', 'wb') as f:
         pickle.dump(results_all, f)
     # gather the stats from all processes
