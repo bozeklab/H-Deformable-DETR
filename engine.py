@@ -249,7 +249,7 @@ def evaluate(
             im = img[i]
             scores = results[i]['scores'] > 0.35
             boxes = results[i]['boxes'] * (800 / 256)
-            results_all[str(image_id)] = (results[i]['scores'], results[i]['boxes'], results[i]['labels'])
+            results_all[targets[i]["image_id"].item()] = (results[i]['scores'], results[i]['boxes'], results[i]['labels'])
 
             from torchvision.utils import draw_bounding_boxes
             im = (im * 255).clamp(0, 255).to(torch.uint8)
