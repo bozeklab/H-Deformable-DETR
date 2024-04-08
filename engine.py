@@ -243,6 +243,7 @@ def evaluate(
         for i in range(bs):
             print(targets[i].keys())
             image_id = targets[i]["image_id"].item()
+            print(targets[i]["labels"])
             im = img[i]
             scores = results[i]['scores'] > 0.4
             boxes = results[i]['boxes'] * (800 / 256)
