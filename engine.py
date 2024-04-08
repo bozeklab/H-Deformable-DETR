@@ -241,6 +241,7 @@ def evaluate(
         img = torch.tensor(samples.tensors)
         bs = img.shape[0]
         for i in range(bs):
+            print(targets[i].keys())
             image_id = targets[i]["image_id"].item()
             im = img[i]
             scores = results[i]['scores'] > 0.4
