@@ -272,7 +272,9 @@ def evaluate(
                 res_pano[i]["file_name"] = file_name
 
             panoptic_evaluator.update(res_pano)
-
+    import pickle
+    with open('/data/pwojcik/detr_dump/results.pkl', 'wb') as f:
+        pickle.dump(results_all, f)
     # gather the stats from all processes
     metric_logger.synchronize_between_processes()
     print("Averaged stats:", metric_logger)
