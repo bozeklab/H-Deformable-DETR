@@ -244,12 +244,12 @@ def evaluate(
         bs = img.shape[0]
         for i in range(bs):
             #print(targets[i].keys())
-            image_id = targets[i].item()
+            image_id = targets[i]["image_id"].item()
             #print(targets[i]["labels"])
             im = img[i]
             scores = results[i]['scores'] > 0.4
             boxes = results[i]['boxes'] * (800 / 256)
-            results_all["image_id"] = (results[i]['scores'], results[i]['boxes'], results[i]['labels'])
+            results_all[str(image_id)] = (results[i]['scores'], results[i]['boxes'], results[i]['labels'])
 
             from torchvision.utils import draw_bounding_boxes
             im = (im * 255).clamp(0, 255).to(torch.uint8)
