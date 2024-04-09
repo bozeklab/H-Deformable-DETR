@@ -20,5 +20,5 @@ python -u main.py \
     --mixed_selection \
     --look_forward_twice \
     --backbone swin_tiny \
-    --pretrained_backbone_path /mnt/pretrained_backbone/swin_tiny_patch4_window7_224.pth \
+    --pretrained_backbone_path pretrained_backbone/swin_tiny_patch4_window7_224.pth \
     ${PY_ARGS}
