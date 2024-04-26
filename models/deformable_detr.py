@@ -179,17 +179,18 @@ class DeformableDETR(nn.Module):
             samples = nested_tensor_from_tensor_list(samples)
         features, pos = self.backbone(samples)
 
-        print('!!!!')
 
         srcs = []
         masks = []
         for l, feat in enumerate(features):
             src, mask = feat.decompose()
+            print('!!!!')
             print(mask.shape)
-            print(srcs)
+            print(src.shape)
             srcs.append(self.input_proj[l](src))
             masks.append(mask)
             assert mask is not None
+        print()
         if self.num_feature_levels > len(srcs):
             _len_srcs = len(srcs)
             for l in range(_len_srcs, self.num_feature_levels):
