@@ -176,8 +176,6 @@ class DeformableDETR(nn.Module):
                                 dictionnaries containing the two above keys for each decoder layer.
         """
         if not isinstance(samples, NestedTensor):
-            print('!!!--!!!')
-            print(samples.shape)
             samples = nested_tensor_from_tensor_list(samples)
         features, pos = self.backbone(samples)
 
