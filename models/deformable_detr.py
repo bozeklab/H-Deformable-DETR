@@ -180,7 +180,8 @@ class DeformableDETR(nn.Module):
         features, pos = self.backbone(samples)
 
         print('!!!!')
-        print(features.shape)
+        print(len(features))
+        print(features[0].shape)
 
         srcs = []
         masks = []
