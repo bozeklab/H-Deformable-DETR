@@ -176,6 +176,8 @@ class DeformableDETR(nn.Module):
                                 dictionnaries containing the two above keys for each decoder layer.
         """
         if not isinstance(samples, NestedTensor):
+            print('!!!--!!!')
+            print(samples.shape)
             samples = nested_tensor_from_tensor_list(samples)
         features, pos = self.backbone(samples)
 
@@ -184,13 +186,13 @@ class DeformableDETR(nn.Module):
         masks = []
         for l, feat in enumerate(features):
             src, mask = feat.decompose()
-            #print('!!!!')
-            #print(mask.shape)
-            #print(src.shape)
+            print('!!!!')
+            print(mask.shape)
+            print(src.shape)
             srcs.append(self.input_proj[l](src))
             masks.append(mask)
             assert mask is not None
-        #print()
+        print()
         if self.num_feature_levels > len(srcs):
             _len_srcs = len(srcs)
             for l in range(_len_srcs, self.num_feature_levels):
