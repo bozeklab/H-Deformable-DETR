@@ -180,13 +180,13 @@ class DeformableDETR(nn.Module):
         features, pos = self.backbone(samples)
 
         print('!!!!')
-        print(len(features))
-        print(features[0].shape)
 
         srcs = []
         masks = []
         for l, feat in enumerate(features):
             src, mask = feat.decompose()
+            print(mask[0].shape)
+            print(srcs[0].shape)
             srcs.append(self.input_proj[l](src))
             masks.append(mask)
             assert mask is not None
