@@ -184,13 +184,13 @@ class DeformableDETR(nn.Module):
         masks = []
         for l, feat in enumerate(features):
             src, mask = feat.decompose()
-            print('!!!!')
-            print(mask.shape)
-            print(src.shape)
+            #print('!!!!')
+            #print(mask.shape)
+            #print(src.shape)
             srcs.append(self.input_proj[l](src))
             masks.append(mask)
             assert mask is not None
-        print()
+        #print()
         if self.num_feature_levels > len(srcs):
             _len_srcs = len(srcs)
             for l in range(_len_srcs, self.num_feature_levels):
