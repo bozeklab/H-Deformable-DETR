@@ -186,7 +186,7 @@ class DeformableDETR(nn.Module):
         for l, feat in enumerate(features):
             src, mask = feat.decompose()
             print(mask.shape)
-            print(srcs[0].shape)
+            print(srcs)
             srcs.append(self.input_proj[l](src))
             masks.append(mask)
             assert mask is not None
