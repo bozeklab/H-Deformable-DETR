@@ -712,6 +712,8 @@ class SwinTransformer(nn.Module):
         x = self.patch_embed(x)
 
         Wh, Ww = x.size(2), x.size(3)
+        print(Wh, Ww)
+        print()
         if self.ape:
             # interpolate the position embedding to the corresponding size
             absolute_pos_embed = F.interpolate(
