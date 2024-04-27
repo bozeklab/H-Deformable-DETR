@@ -706,9 +706,9 @@ class SwinTransformer(nn.Module):
 
     def forward(self, x):
         """Forward function."""
-        x = self.patch_embed(x)
         print('trans')
         print(x.shape)
+        x = self.patch_embed(x)
         Wh, Ww = x.size(2), x.size(3)
         if self.ape:
             # interpolate the position embedding to the corresponding size
