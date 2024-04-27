@@ -705,15 +705,10 @@ class SwinTransformer(nn.Module):
             raise TypeError("pretrained must be a str or None")
 
     def forward(self, x):
-        print('trans')
-        print(x.shape)
-
         """Forward function."""
         x = self.patch_embed(x)
 
         Wh, Ww = x.size(2), x.size(3)
-        print(Wh, Ww)
-        print()
         if self.ape:
             # interpolate the position embedding to the corresponding size
             absolute_pos_embed = F.interpolate(
