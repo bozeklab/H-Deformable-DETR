@@ -154,22 +154,19 @@ def make_coco_transforms(image_set):
         return T.Compose(
             [
                 T.RandomHorizontalFlip(),
-                T.RandomSelect(
-                    T.RandomResize(scales, max_size=1333),
-                    T.Compose(
-                        [
-                            T.RandomResize([(400, 400), (500, 500), (600, 600)]),
-                            T.RandomSizeCrop(384, 600),
-                            T.RandomResize(scales, max_size=1333),
-                        ]
-                    ),
+                T.Compose(
+                    [
+                        T.RandomResize([(400, 400), (500, 500), (600, 600)]),
+                        T.RandomSizeCrop(384, 600),
+                        T.Resize(256),
+                    ]
                 ),
                 normalize,
             ]
         )
 
     if image_set == "val":
-        return T.Compose([T.RandomResize([800], max_size=1333), normalize,])
+        return T.Compose([T.RandomResize([256], max_size=1333), normalize,])
 
     raise ValueError(f"unknown {image_set}")
 

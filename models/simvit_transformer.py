@@ -265,30 +265,15 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
 
     def forward_features(self, x):
         B = x.shape[0]
-        W = x.shape[2]
-        embedding_size = self.pos_embed.shape[-1]
+        print('!!!!')
         num_patches = self.patch_embed.num_patches
-        num_extra_tokens = self.pos_embed.shape[-2] - num_patches
-        # height (== width) for the checkpoint position embedding
-        new_size = int((((W // self.patch_size) ** 2 + 1) - num_extra_tokens) ** 0.5)
-        # height (== width) for the new position embedding
-        orig_size = int(num_patches ** 0.5)
-        if orig_size != new_size:
-            extra_tokens = self.pos_embed[:, :num_extra_tokens].clone()
-            pos_tokens = self.pos_embed[:, num_extra_tokens:].clone()
-            pos_tokens = pos_tokens.reshape(-1, orig_size, orig_size, embedding_size).permute(0, 3, 1, 2)
-            pos_tokens = torch.nn.functional.interpolate(
-                pos_tokens, size=(new_size, new_size), mode='bicubic', align_corners=False)
-            pos_tokens = pos_tokens.permute(0, 2, 3, 1).flatten(1, 2)
-            new_pos_embed = torch.cat((extra_tokens, pos_tokens), dim=1)
-        else:
-            new_pos_embed = self.pos_embed
-
+        print(num_patches)
+        print(self.pos_embed.shape)
         x = self.patch_embed(x)
 
         cls_tokens = self.cls_token.expand(B, -1, -1)  # stole cls_tokens impl from Phil Wang, thanks
         x = torch.cat((cls_tokens, x), dim=1)
-        x = x + new_pos_embed
+        x = x + self.pos_embed
         x = self.pos_drop(x)
 
         for blk in self.blocks:
