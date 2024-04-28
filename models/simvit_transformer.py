@@ -265,6 +265,9 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
 
     def forward_features(self, x):
         B = x.shape[0]
+        print('!!!!')
+        embedding_size = self.pos_embed_checkpoint.shape[-1]
+        print(embedding_size)
         x = self.patch_embed(x)
 
         cls_tokens = self.cls_token.expand(B, -1, -1)  # stole cls_tokens impl from Phil Wang, thanks
