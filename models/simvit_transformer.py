@@ -270,9 +270,9 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
         num_patches = self.patch_embed.num_patches
         num_extra_tokens = self.pos_embed.shape[-2] - num_patches
         # height (== width) for the checkpoint position embedding
-        orig_size = int((((W // self.patch_size) ** 2) + 1 - num_extra_tokens) ** 0.5)
+        new_size = int((((W // self.patch_size) ** 2 + 1) - num_extra_tokens) ** 0.5)
         # height (== width) for the new position embedding
-        new_size = int(num_patches ** 0.5)
+        orig_size = int(num_patches ** 0.5)
         if orig_size != new_size:
             extra_tokens = self.pos_embed[:, :num_extra_tokens].clone()
             pos_tokens = self.pos_embed[:, num_extra_tokens:].clone()
