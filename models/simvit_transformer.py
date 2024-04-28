@@ -265,10 +265,7 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
 
     def forward_features(self, x):
         B = x.shape[0]
-        print('!!!!')
         num_patches = self.patch_embed.num_patches
-        print(num_patches)
-        print(self.pos_embed.shape)
         x = self.patch_embed(x)
 
         cls_tokens = self.cls_token.expand(B, -1, -1)  # stole cls_tokens impl from Phil Wang, thanks
@@ -509,6 +506,8 @@ class SimpleFeaturePyramidWrapper(nn.Module):
         __x = x[list(x.keys())[0]].clone()
         x0 = self.neck(x)
         r1 = [x0[t] for t in x0.keys()]
+        for x in r1:
+            print(x.shape)
         return r1
 
 
