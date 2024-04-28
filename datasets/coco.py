@@ -148,7 +148,7 @@ def make_coco_transforms(image_set):
         [T.ToTensor(), T.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])]
     )
 
-    scales = [(scale, scale) for scale in [480, 512, 544, 576, 608, 640, 672, 704, 736, 768, 800]]
+    #scales = [(scale, scale) for scale in [480, 512, 544, 576, 608, 640, 672, 704, 736, 768, 800]]
 
     if image_set == "train":
         return T.Compose(
@@ -156,8 +156,8 @@ def make_coco_transforms(image_set):
                 T.RandomHorizontalFlip(),
                 T.Compose(
                     [
-                        T.RandomResize([(400, 400), (500, 500), (600, 600)]),
-                        T.RandomSizeCrop(384, 600),
+                        #T.RandomResize([(400, 400), (500, 500), (600, 600)]),
+                        T.RandomSizeCrop(100, 256),
                         T.RandomResize([(256, 256)]),
                     ]
                 ),
