@@ -24,6 +24,7 @@ from torchvision.models._utils import IntermediateLayerGetter
 from typing import Dict, List
 
 from util.misc import NestedTensor, is_main_process
+from util.utils import interpolate_pos_embed
 
 from .position_encoding import build_position_encoding
 from .simvit_transformer import SimpleFeaturePyramid, vit_base_patch16, SimpleFeaturePyramidWrapper
@@ -212,6 +213,14 @@ class TransformerBackbone(nn.Module):
                 init_values=None)
             backbone = SimpleFeaturePyramidWrapper(backbone=encoder)
             embed_dim = 256
+            checkpoint = torch.load(args.pretrained_backbone_path, map_location='cpu')
+            checkpoint_model = checkpoint['model']
+            #checkpoint_model.update(neck_dict)
+            interpolate_pos_embed(backbone.backbone, checkpoint_model)
+
+            msg = backbone.backbone.load_state_dict(checkpoint_model, strict=False)
+            print(msg)
+
         else:
             raise NotImplementedError
 
