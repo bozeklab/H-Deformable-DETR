@@ -505,7 +505,7 @@ class SimpleFeaturePyramidWrapper(nn.Module):
         x0 = self.neck(x)
         r1 = [x0[t] for t in x0.keys()]
         outs = {}
-        for i in range(3):
+        for i in range(len(self.neck.scale_factors)):
             outs[str(i + 1)] = r1[i]
         return outs
 
