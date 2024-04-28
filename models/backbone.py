@@ -210,6 +210,7 @@ class TransformerBackbone(nn.Module):
                 drop_path_rate=args.drop_path_rate,
                 init_values=None)
             backbone = SimpleFeaturePyramidWrapper(backbone=encoder)
+            embed_dim = 768
         else:
             raise NotImplementedError
 
@@ -220,12 +221,20 @@ class TransformerBackbone(nn.Module):
 
         if return_interm_layers:
 
-            self.strides = [8, 16, 32]
-            self.num_channels = [
-                embed_dim * 2,
-                embed_dim * 4,
-                embed_dim * 8,
-            ]
+            if backbone != "simvit_base":
+                self.strides = [8, 16, 32]
+                self.num_channels = [
+                    embed_dim * 2,
+                    embed_dim * 4,
+                    embed_dim * 8,
+                ]
+            else:
+                self.strides = [8, 16, 32]
+                self.num_channels = [
+                    embed_dim,
+                    embed_dim,
+                    embed_dim,
+                ]
         else:
             self.strides = [32]
             self.num_channels = [embed_dim * 8]
