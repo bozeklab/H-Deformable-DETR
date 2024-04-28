@@ -210,7 +210,7 @@ class TransformerBackbone(nn.Module):
                 drop_path_rate=args.drop_path_rate,
                 init_values=None)
             backbone = SimpleFeaturePyramidWrapper(backbone=encoder)
-            embed_dim = 768
+            embed_dim = 256
         else:
             raise NotImplementedError
 

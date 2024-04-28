@@ -502,13 +502,12 @@ class SimpleFeaturePyramidWrapper(nn.Module):
 
     def forward(self, images):
         x = self.backbone.forward_features(images)
-        _x = {'outcome': x[list(x.keys())[0]].clone()}
-        __x = x[list(x.keys())[0]].clone()
         x0 = self.neck(x)
         r1 = [x0[t] for t in x0.keys()]
-        for x in r1:
-            print(x.shape)
-        return r1
+        outs = {}
+        for i in range(3):
+            outs[str(i + 1)] = r1[i]
+        return outs
 
 
 def vit_base_patch16(**kwargs):
