@@ -221,7 +221,6 @@ class TransformerBackbone(nn.Module):
                 parameter.requires_grad_(False)
 
         if return_interm_layers:
-
             if back_name != "simvit_base":
                 self.strides = [8, 16, 32]
                 self.num_channels = [

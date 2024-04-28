@@ -498,7 +498,7 @@ class SimpleFeaturePyramidWrapper(nn.Module):
         self.backbone = backbone
 
         self.neck = SimpleFeaturePyramid(in_feature='outcome', out_channels=256,
-                                         scale_factors=(4.0, 2.0, 1.0, 0.5), top_block=None, norm="LN", square_pad=None)
+                                         scale_factors=(4.0, 2.0, 1.0), top_block=None, norm="LN", square_pad=None)
 
     def forward(self, images):
         x = self.backbone.forward_features(images)
@@ -507,8 +507,6 @@ class SimpleFeaturePyramidWrapper(nn.Module):
         outs = {}
         for i in range(3):
             outs[str(i + 1)] = r1[i]
-            print('!!!')
-            print(r1[i].shape)
         return outs
 
 
