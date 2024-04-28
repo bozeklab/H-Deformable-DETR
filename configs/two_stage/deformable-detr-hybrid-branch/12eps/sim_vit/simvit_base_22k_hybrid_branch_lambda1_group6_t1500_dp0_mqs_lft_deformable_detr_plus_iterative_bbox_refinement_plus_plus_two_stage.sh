@@ -19,6 +19,6 @@ python -u main.py \
     --dropout 0.0 \
     --mixed_selection \
     --look_forward_twice \
-    --backbone swin_small \
+    --backbone simvit_base \
     --pretrained_backbone_path pretrained_backbone/swin_small_patch4_window7_224_22k.pth \
     ${PY_ARGS}

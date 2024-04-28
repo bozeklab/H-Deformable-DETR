@@ -26,7 +26,7 @@ from typing import Dict, List
 from util.misc import NestedTensor, is_main_process
 
 from .position_encoding import build_position_encoding
-from .simvit_transformer import SimpleFeaturePyramid, vit_base_patch16
+from .simvit_transformer import SimpleFeaturePyramid, vit_base_patch16, SimpleFeaturePyramidWrapper
 from .swin_transformer import SwinTransformer
 
 
@@ -204,6 +204,12 @@ class TransformerBackbone(nn.Module):
             )
             embed_dim = 192
             backbone.init_weights(args.pretrained_backbone_path)
+        elif backbone == "simvit_base":
+            encoder = vit_base_patch16(
+                drop_rate=0.0,
+                drop_path_rate=args.drop_path_rate,
+                init_values=None)
+            backbone = SimpleFeaturePyramidWrapper(backbone=encoder)
         else:
             raise NotImplementedError
 
