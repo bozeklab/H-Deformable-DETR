@@ -266,6 +266,7 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
     def forward_features(self, x):
         B = x.shape[0]
         print('!!!!')
+        print(x.shape)
         num_patches = self.patch_embed.num_patches
         print(num_patches)
         print(self.pos_embed.shape)
