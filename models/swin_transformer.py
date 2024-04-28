@@ -737,6 +737,7 @@ class SwinTransformer(nn.Module):
                 )
                 outs[str(i)] = out
         for key in outs.keys():
+            print(key)
             print(outs[key].shape)
         print()
         return outs
