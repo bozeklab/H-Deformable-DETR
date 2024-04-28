@@ -489,6 +489,25 @@ class SimpleFeaturePyramid(nn.Module):
         return {f: res for f, res in zip(self._out_features, results)}
 
 
+class SimpleFeaturePyramidWrapper(nn.Module):
+
+    def __init__(self, backbone):
+        super(SimpleFeaturePyramidWrapper, self).__init__()
+
+        self.backbone = backbone
+
+        self.neck = SimpleFeaturePyramid(in_feature='outcome', out_channels=256,
+                                         scale_factors=(4.0, 2.0, 1.0, 0.5), top_block=None, norm="LN", square_pad=None)
+
+    def forward(self, images):
+        x = self.backbone.forward_features(images)
+        _x = {'outcome': x[list(x.keys())[0]].clone()}
+        __x = x[list(x.keys())[0]].clone()
+        x0 = self.neck(x)
+        r1 = [x0[t] for t in x0.keys()]
+        return r1
+
+
 def vit_base_patch16(**kwargs):
     model = VisionTransformer(
         img_size=256, patch_size=16, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4, qkv_bias=True,
