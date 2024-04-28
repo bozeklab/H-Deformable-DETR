@@ -281,7 +281,8 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
                 pos_tokens, size=(new_size, new_size), mode='bicubic', align_corners=False)
             pos_tokens = pos_tokens.permute(0, 2, 3, 1).flatten(1, 2)
             new_pos_embed = torch.cat((extra_tokens, pos_tokens), dim=1)
-            self.pos_embed.copy(new_pos_embed)
+            self.pos_embed.copy_(new_pos_embed)
+
 
         x = self.patch_embed(x)
 
