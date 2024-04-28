@@ -147,6 +147,7 @@ class TransformerBackbone(nn.Module):
     ):
         super().__init__()
         out_indices = (1, 2, 3)
+        back_name = backbone
         if backbone == "swin_tiny":
             backbone = SwinTransformer(
                 embed_dim=96,
@@ -221,7 +222,7 @@ class TransformerBackbone(nn.Module):
 
         if return_interm_layers:
 
-            if backbone != "simvit_base":
+            if back_name != "simvit_base":
                 self.strides = [8, 16, 32]
                 self.num_channels = [
                     embed_dim * 2,
