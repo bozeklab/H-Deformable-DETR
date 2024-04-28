@@ -268,6 +268,7 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
         print('!!!!')
         num_patches = self.patch_embed.num_patches
         print(num_patches)
+        print(pos_embed.shape)
         x = self.patch_embed(x)
 
         cls_tokens = self.cls_token.expand(B, -1, -1)  # stole cls_tokens impl from Phil Wang, thanks
