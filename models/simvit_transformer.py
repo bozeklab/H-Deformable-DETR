@@ -507,6 +507,8 @@ class SimpleFeaturePyramidWrapper(nn.Module):
         outs = {}
         for i in range(3):
             outs[str(i + 1)] = r1[i]
+            print('!!!')
+            print(r1[i].shape)
         return outs
 
 
