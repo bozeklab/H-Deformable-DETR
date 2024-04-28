@@ -213,13 +213,13 @@ class TransformerBackbone(nn.Module):
                 init_values=None)
             backbone = SimpleFeaturePyramidWrapper(backbone=encoder)
             embed_dim = 256
-            #checkpoint = torch.load(args.pretrained_backbone_path, map_location='cpu')
-            #checkpoint_model = checkpoint['model']
-            #checkpoint_model.update(neck_dict)
-            #interpolate_pos_embed(backbone.backbone, checkpoint_model)
+            checkpoint = torch.load(args.pretrained_backbone_path, map_location='cpu')
+            checkpoint_model = checkpoint['model']
+            checkpoint_model.update(neck_dict)
+            interpolate_pos_embed(backbone.backbone, checkpoint_model)
 
-            #msg = backbone.backbone.load_state_dict(checkpoint_model, strict=False)
-            #print(msg)
+            msg = backbone.backbone.load_state_dict(checkpoint_model, strict=False)
+            print(msg)
 
         else:
             raise NotImplementedError
