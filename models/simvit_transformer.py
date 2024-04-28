@@ -274,8 +274,8 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
         # height (== width) for the new position embedding
         new_size = int(num_patches ** 0.5)
         if orig_size != new_size:
-            extra_tokens = self.patch_embed[:, :num_extra_tokens].clone()
-            pos_tokens = self.patch_embed[:, num_extra_tokens:].clone()
+            extra_tokens = self.pos_embed[:, :num_extra_tokens].clone()
+            pos_tokens = self.pos_embed[:, num_extra_tokens:].clone()
             pos_tokens = pos_tokens.reshape(-1, orig_size, orig_size, embedding_size).permute(0, 3, 1, 2)
             pos_tokens = torch.nn.functional.interpolate(
                 pos_tokens, size=(new_size, new_size), mode='bicubic', align_corners=False)
