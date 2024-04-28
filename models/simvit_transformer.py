@@ -266,7 +266,7 @@ class VisionTransformer(timm.models.vision_transformer.VisionTransformer):
     def forward_features(self, x):
         B = x.shape[0]
         W = x.shape[2]
-        embedding_size = self.pos_embed_checkpoint.shape[-1]
+        embedding_size = self.pos_embed.shape[-1]
         num_patches = self.patch_embed.num_patches
         num_extra_tokens = self.pos_embed.shape[-2] - num_patches
         # height (== width) for the checkpoint position embedding
