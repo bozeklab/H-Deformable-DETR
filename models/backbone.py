@@ -215,7 +215,7 @@ class TransformerBackbone(nn.Module):
             embed_dim = 256
             checkpoint = torch.load(args.pretrained_backbone_path, map_location='cpu')
             checkpoint_model = checkpoint['model']
-            checkpoint_model.update(neck_dict)
+            #checkpoint_model.update(neck_dict)
             interpolate_pos_embed(backbone.backbone, checkpoint_model)
 
             msg = backbone.backbone.load_state_dict(checkpoint_model, strict=False)
