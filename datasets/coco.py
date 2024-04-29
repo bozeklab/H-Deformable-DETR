@@ -165,7 +165,7 @@ def make_coco_transforms(image_set):
             ]
         )
 
-    if image_set == "val":
+    if image_set == "val" or image_set == "test":
         return T.Compose([T.RandomResize([256], max_size=1333), normalize,])
 
     raise ValueError(f"unknown {image_set}")
