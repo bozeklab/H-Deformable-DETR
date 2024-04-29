@@ -94,6 +94,7 @@ def build(image_set, args):
     PATHS = {
         "train": ("train2017", Path("annotations") / f'{mode}_train2017.json'),
         "val": ("val2017", Path("annotations") / f'{mode}_val2017.json'),
+        "test": ("test2017", Path("annotations") / f'{mode}_test2017.json'),
     }
 
     img_folder, ann_file = PATHS[image_set]
