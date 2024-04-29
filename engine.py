@@ -249,7 +249,7 @@ def evaluate(
             #print(targets[i]["labels"])
             im = img[i]
             scores = results[i]['scores'] >= 0.375
-            boxes = results[i]['boxes'] * (800 / 256)
+            boxes = results[i]['boxes']
             results_all.update({image_id: (results[i]['scores'], results[i]['boxes'], results[i]['labels'])})
             target_all.update({image_id: (targets[i]['boxes'], targets[i]['labels'])})
 
