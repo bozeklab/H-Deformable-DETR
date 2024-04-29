@@ -489,7 +489,7 @@ def main(args):
                     checkpoint_path,
                 )
 
-        if epoch == args.epochs - 1:
+        if epoch in [0, 11, 35]:
             test_stats, coco_evaluator = evaluate(
                 model,
                 criterion,
