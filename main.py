@@ -269,7 +269,7 @@ def main(args):
     dataset_train = build_dataset(image_set="train", args=args)
     if not args.eval_in_training_set:
         dataset_val = build_dataset(
-            image_set="test", args=args, eval_in_training_set=False,
+            image_set="val", args=args, eval_in_training_set=False,
         )
     else:
         print("eval in the training set")

@@ -11,6 +11,7 @@ python -u main.py \
     --two_stage \
     --dim_feedforward 2048 \
     --epochs 12 \
+    --use_wandb \
     --lr_drop 11 \
     --num_queries_one2one 300 \
     --num_queries_one2many 1500 \
