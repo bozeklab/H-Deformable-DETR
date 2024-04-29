@@ -15,7 +15,7 @@ python -u main.py \
     --lr_drop 11 \
     --num_queries_one2one 300 \
     --num_queries_one2many 1500 \
-    --lr_backbone_names body.backbone \
+    --lr_backbone_names bodsy.backbone \
     --k_one2many 6 \
     --lambda_one2many 1.0 \
     --dropout 0.0 \
