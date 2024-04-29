@@ -349,11 +349,6 @@ def main(args):
             "lr": args.lr * args.lr_linear_proj_mult,
         },
     ]
-    print('!!!')
-    for n, p in model_without_ddp.named_parameters():
-        if match_name_keywords(n, args.lr_backbone_names):
-            print(n)
-    print('!!!')
     if args.sgd:
         optimizer = torch.optim.SGD(
             param_dicts, lr=args.lr, momentum=0.9, weight_decay=args.weight_decay
