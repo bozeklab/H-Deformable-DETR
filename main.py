@@ -350,7 +350,7 @@ def main(args):
         },
     ]
     print('!!!')
-    print(param_dicts[1])
+    print(param_dicts[1].keys())
     if args.sgd:
         optimizer = torch.optim.SGD(
             param_dicts, lr=args.lr, momentum=0.9, weight_decay=args.weight_decay
