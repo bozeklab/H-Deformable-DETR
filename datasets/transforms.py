@@ -16,6 +16,7 @@ import PIL
 import torch
 import torchvision.transforms as T
 import torchvision.transforms.functional as F
+from PIL import ImageFilter
 
 from util.box_ops import box_xyxy_to_cxcywh
 from util.misc import interpolate
@@ -171,6 +172,47 @@ class RandomCrop(object):
         region = T.RandomCrop.get_params(img, self.size)
         return crop(img, target, region)
 
+class ColorJitter(object):
+    def __init__(self, brightness=0.25, contrast=0.25, saturation=0.1, hue=0.05, p=0.2):
+        self.brightness = brightness
+        self.contrast = contrast
+        self.saturation = saturation
+        self.hue = hue
+        self.p = p
+
+    def __call__(self, img, target):
+        if random.random() < self.p:
+            t = T.ColorJitter(brightness=self.brightness, contrast=self.contrast,
+                              saturation=self.saturation, hue=self.hue)
+            return t(img), target
+        else:
+            return img, target
+
+
+class GaussianBlur(object):
+    """Gaussian blur augmentation in SimCLR https://arxiv.org/abs/2002.05709"""
+    def __init__(self, sigma=[.1, 2.], p=0.1):
+        self.sigma = sigma
+        self.p = p
+
+    def __call__(self, img, target):
+        if random.random() < self.p:
+            sigma = random.uniform(self.sigma[0], self.sigma[1])
+            img = img.filter(ImageFilter.GaussianBlur(radius=sigma))
+        return img, target
+
+
+class GaussNoise(object):
+    def __init__(self, var_limit=50, p=0.25):
+        self.var_limit = var_limit
+        self.p = p
+
+    def __call__(self):
+        if random.random() < self.p:
+            t = T.Gauss
+
+dict(type='Blur', blur_limit=10, p=0.2),
+dict(type='GaussNoise', var_limit=50, p=0.25),
 
 class RandomSizeCrop(object):
     def __init__(self, min_size: int, max_size: int):

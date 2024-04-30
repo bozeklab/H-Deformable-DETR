@@ -162,7 +162,10 @@ def make_coco_transforms(image_set):
                             T.RandomResize([(256, 256)]),
                         ]
                     ),
+                    T.GaussianBlur(),
+                    T.ColorJitter(),
                     T.RandomResize([(256, 256)]),
+                    p=0.4
                 ),
                 normalize,
             ]
