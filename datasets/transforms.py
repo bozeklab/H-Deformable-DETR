@@ -188,7 +188,6 @@ class ColorJitter(object):
         else:
             return img, target
 
-
 class GaussianBlur(object):
     """Gaussian blur augmentation in SimCLR https://arxiv.org/abs/2002.05709"""
     def __init__(self, sigma=[.1, 2.], p=0.1):
