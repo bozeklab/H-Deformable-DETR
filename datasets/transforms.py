@@ -173,7 +173,7 @@ class RandomCrop(object):
         return crop(img, target, region)
 
 class ColorJitter(object):
-    def __init__(self, brightness=0.25, contrast=0.25, saturation=0.1, hue=0.05, p=0.2):
+    def __init__(self, brightness=0.25, contrast=0.25, saturation=0.1, hue=0.05, p=0.8):
         self.brightness = brightness
         self.contrast = contrast
         self.saturation = saturation
@@ -200,18 +200,15 @@ class GaussianBlur(object):
             img = img.filter(ImageFilter.GaussianBlur(radius=sigma))
         return img, target
 
-
-class GaussNoise(object):
-    def __init__(self, var_limit=50, p=0.25):
-        self.var_limit = var_limit
+class RandomGrayscale(object):
+    def __init__(self, p=0.1):
         self.p = p
 
-    def __call__(self):
+    def __call__(self, img, target):
         if random.random() < self.p:
-            t = T.Gauss
+            return T.RandomCrop(img), target
+        return img, target
 
-dict(type='Blur', blur_limit=10, p=0.2),
-dict(type='GaussNoise', var_limit=50, p=0.25),
 
 class RandomSizeCrop(object):
     def __init__(self, min_size: int, max_size: int):
