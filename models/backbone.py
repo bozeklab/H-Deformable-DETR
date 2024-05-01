@@ -238,7 +238,7 @@ class TransformerBackbone(nn.Module):
                     embed_dim * 8,
                 ]
             else:
-                self.strides = [8, 16, 32]
+                self.strides = [4, 8, 16]
                 self.num_channels = [
                     embed_dim,
                     embed_dim,
