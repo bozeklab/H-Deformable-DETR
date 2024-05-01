@@ -206,7 +206,7 @@ class RandomGrayscale(object):
 
     def __call__(self, img, target):
         if random.random() < self.p:
-            return T.RandomCrop(img), target
+            return T.RandomGrayscale(img), target
         return img, target
 
 
