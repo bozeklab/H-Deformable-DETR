@@ -27,7 +27,7 @@ from util.misc import NestedTensor, is_main_process
 from util.utils import interpolate_pos_embed
 
 from .position_encoding import build_position_encoding
-from .simvit_transformer import SimpleFeaturePyramid, vit_base_patch16, SimpleFeaturePyramidWrapper
+from .simvit_transformer import SimpleFeaturePyramid, vit_base_patch16, SimpleFeaturePyramidWrapper, SimViTWrapper
 from .swin_transformer import SwinTransformer
 
 
@@ -219,6 +219,19 @@ class TransformerBackbone(nn.Module):
             interpolate_pos_embed(backbone.backbone, checkpoint_model)
             msg = backbone.backbone.load_state_dict(checkpoint_model, strict=False)
             print(msg)
+        elif backbone == "sim_single_scale":
+            encoder = vit_base_patch16(
+                drop_rate=0.0,
+                drop_path_rate=args.drop_path_rate,
+                init_values=None)
+            backbone = SimViTWrapper(backbone=encoder)
+            checkpoint = torch.load(args.pretrained_backbone_path, map_location='cpu')
+            checkpoint_model = checkpoint['model']
+            #checkpoint_model.update(neck_dict)
+            interpolate_pos_embed(backbone.backbone, checkpoint_model)
+            msg = backbone.backbone.load_state_dict(checkpoint_model, strict=False)
+            print(msg)
+            embed_dim = 768
         else:
             raise NotImplementedError
 
@@ -243,8 +256,12 @@ class TransformerBackbone(nn.Module):
                     embed_dim * 8,
                 ]
         else:
-            self.strides = [32]
-            self.num_channels = [embed_dim * 8]
+            if back_name == "sim_single_scale":
+                self.strides = [16]
+                self.num_channels = [embed_dim]
+            else:
+                self.strides = [32]
+                self.num_channels = [embed_dim * 8]
 
         self.body = backbone
 

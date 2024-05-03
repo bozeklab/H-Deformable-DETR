@@ -497,9 +497,8 @@ class SimViTWrapper(nn.Module):
         self.backbone = backbone
 
     def forward(self, images):
-        x = self.backbone.forward_features(images)
-        outs = {}
-        'outcome'
+        x = self.backbone.forward_features(images)['outcome']
+        outs = {3: x}
         return outs
 
 
