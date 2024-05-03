@@ -243,9 +243,9 @@ class DeformableTransformer(nn.Module):
 
             topk = self.two_stage_num_proposals
 
-            print('!!!')
-            print(topk)
-            print(enc_outputs_class.shape)
+            #print('!!!')
+            #print(topk)
+            #print(enc_outputs_class.shape)
 
             topk_proposals = torch.topk(enc_outputs_class[..., 0], topk, dim=1)[1]
             topk_coords_unact = torch.gather(
