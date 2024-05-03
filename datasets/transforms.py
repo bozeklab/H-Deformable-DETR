@@ -173,7 +173,7 @@ class RandomCrop(object):
         return crop(img, target, region)
 
 class ColorJitter(object):
-    def __init__(self, brightness=0.25, contrast=0.25, saturation=0.1, hue=0.05, p=0.1):
+    def __init__(self, brightness=0.25, contrast=0.25, saturation=0.1, hue=0.05, p=0.3):
         self.brightness = brightness
         self.contrast = contrast
         self.saturation = saturation
