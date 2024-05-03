@@ -161,7 +161,7 @@ def make_coco_transforms(image_set):
                     T.Compose(
                         [
                             #T.RandomResize([(400, 400), (500, 500), (600, 600)]),
-                            T.RandomSizeCrop(100, 256),
+                            T.RandomSizeCrop(200, 256),
                             T.RandomResize([(256, 256)]),
                         ]
                     ),
