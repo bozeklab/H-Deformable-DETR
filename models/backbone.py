@@ -238,6 +238,7 @@ class TransformerBackbone(nn.Module):
                     embed_dim,
                 ]
             else:
+                print('dupa')
                 self.strides = [8, 16, 32]
                 self.num_channels = [
                     embed_dim * 2,
