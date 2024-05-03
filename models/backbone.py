@@ -207,6 +207,7 @@ class TransformerBackbone(nn.Module):
             embed_dim = 192
             backbone.init_weights(args.pretrained_backbone_path)
         elif backbone == "simvit_base":
+            print('duuupa')
             encoder = vit_base_patch16(
                 drop_rate=0.0,
                 drop_path_rate=args.drop_path_rate,
@@ -219,7 +220,6 @@ class TransformerBackbone(nn.Module):
             interpolate_pos_embed(backbone.backbone, checkpoint_model)
             msg = backbone.backbone.load_state_dict(checkpoint_model, strict=False)
             print(msg)
-
         else:
             raise NotImplementedError
 
