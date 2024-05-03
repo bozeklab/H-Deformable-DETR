@@ -242,7 +242,7 @@ class DeformableTransformer(nn.Module):
             )
 
             print('!!!')
-            print(self.topk)
+            print(topk)
             print(enc_outputs_class.shape)
 
             topk = self.two_stage_num_proposals
