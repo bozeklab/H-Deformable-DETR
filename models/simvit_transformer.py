@@ -490,8 +490,20 @@ class SimpleFeaturePyramid(nn.Module):
         return {f: res for f, res in zip(self._out_features, results)}
 
 
-class SimpleFeaturePyramidWrapper(nn.Module):
+class SimViTWrapper(nn.Module):
+    def __init__(self, backbone):
+        super(SimViTWrapper, self).__init__()
 
+        self.backbone = backbone
+
+    def forward(self, images):
+        x = self.backbone.forward_features(images)
+        outs = {}
+        'outcome'
+        return outs
+
+
+class SimpleFeaturePyramidWrapper(nn.Module):
     def __init__(self, backbone):
         super(SimpleFeaturePyramidWrapper, self).__init__()
 

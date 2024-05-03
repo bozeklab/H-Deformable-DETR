@@ -230,14 +230,14 @@ class TransformerBackbone(nn.Module):
                 parameter.requires_grad_(False)
 
         if return_interm_layers:
-            if back_name != "simvit_base":
+            if back_name:
                 self.strides = [8, 16, 32]
                 self.num_channels = [
                     embed_dim * 2,
                     embed_dim * 4,
                     embed_dim * 8,
                 ]
-            else:
+            elif back_name == "simvit_base":
                 self.strides = [4, 8, 16]
                 self.num_channels = [
                     embed_dim,
@@ -286,6 +286,9 @@ def build_backbone(args):
     position_embedding = build_position_encoding(args)
     train_backbone = args.lr_backbone > 0
     return_interm_layers = args.masks or (args.num_feature_levels > 1)
+    print('!!!')
+    print(args.masks)
+    print(args.num_feature_levels)
     if "resnet" in args.backbone:
         backbone = Backbone(
             args.backbone, train_backbone, return_interm_layers, args.dilation,
