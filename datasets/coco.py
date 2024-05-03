@@ -148,28 +148,32 @@ def make_coco_transforms(image_set):
         [T.ToTensor(), T.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])]
     )
 
-    scales = [480, 512, 544, 576, 608, 640, 672, 704, 736, 768, 800]
+    #scales = [(scale, scale) for scale in [480, 512, 544, 576, 608, 640, 672, 704, 736, 768, 800]]
 
     if image_set == "train":
         return T.Compose(
             [
                 T.RandomHorizontalFlip(),
+                T.GaussianBlur(),
+                T.RandomGrayscale(),
+                T.ColorJitter(),
                 T.RandomSelect(
-                    T.RandomResize(scales, max_size=1333),
                     T.Compose(
                         [
-                            T.RandomResize([400, 500, 600]),
-                            T.RandomSizeCrop(384, 600),
-                            T.RandomResize(scales, max_size=1333),
+                            #T.RandomResize([(400, 400), (500, 500), (600, 600)]),
+                            T.RandomSizeCrop(100, 256),
+                            T.RandomResize([(256, 256)]),
                         ]
                     ),
+                    T.RandomResize([(256, 256)]),
+                    p=0.4
                 ),
                 normalize,
             ]
         )
 
-    if image_set == "val":
-        return T.Compose([T.RandomResize([800], max_size=1333), normalize,])
+    if image_set == "val" or image_set == "test":
+        return T.Compose([T.RandomResize([256], max_size=1333), normalize])
 
     raise ValueError(f"unknown {image_set}")
 
@@ -181,6 +185,7 @@ def build(image_set, args, eval_in_training_set):
     PATHS = {
         "train": (root / "train2017", root / "annotations" / f"{mode}_train2017.json"),
         "val": (root / "val2017", root / "annotations" / f"{mode}_val2017.json"),
+        "test": (root / "test2017", root / "annotations" / f"{mode}_test2017.json"),
     }
 
     img_folder, ann_file = PATHS[image_set]
