@@ -14,8 +14,8 @@ python -u main.py \
     --use_wandb \
     --lr_drop 11 \
     --num_feature_levels 1 \
-    --num_queries_one2one 200 \
-    --num_queries_one2many 1000 \
+    --num_queries_one2one 100 \
+    --num_queries_one2many 500 \
     --lr_backbone_names body.backbone \
     --k_one2many 6 \
     --lambda_one2many 1.0 \
