@@ -363,7 +363,7 @@ coco_dataset = CocoDataset(annotation_path, image_dir)
 coco_dataset.display_categories()
 
 
-html = coco_dataset.display_image(381, use_url=False)
+html = coco_dataset.display_image(2001, use_url=False)
 
 with open("vis.html", "w") as file:
     file.write(html)
