@@ -217,7 +217,6 @@ class TransformerBackbone(nn.Module):
             checkpoint_model = checkpoint['model']
             #checkpoint_model.update(neck_dict)
             interpolate_pos_embed(backbone.backbone, checkpoint_model)
-
             msg = backbone.backbone.load_state_dict(checkpoint_model, strict=False)
             print(msg)
 
@@ -238,7 +237,6 @@ class TransformerBackbone(nn.Module):
                     embed_dim,
                 ]
             else:
-                print('dupa')
                 self.strides = [8, 16, 32]
                 self.num_channels = [
                     embed_dim * 2,
