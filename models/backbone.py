@@ -230,19 +230,19 @@ class TransformerBackbone(nn.Module):
                 parameter.requires_grad_(False)
 
         if return_interm_layers:
-            if back_name:
-                self.strides = [8, 16, 32]
-                self.num_channels = [
-                    embed_dim * 2,
-                    embed_dim * 4,
-                    embed_dim * 8,
-                ]
-            elif back_name == "simvit_base":
+            if back_name == "simvit_base":
                 self.strides = [4, 8, 16]
                 self.num_channels = [
                     embed_dim,
                     embed_dim,
                     embed_dim,
+                ]
+            else:
+                self.strides = [8, 16, 32]
+                self.num_channels = [
+                    embed_dim * 2,
+                    embed_dim * 4,
+                    embed_dim * 8,
                 ]
         else:
             self.strides = [32]
