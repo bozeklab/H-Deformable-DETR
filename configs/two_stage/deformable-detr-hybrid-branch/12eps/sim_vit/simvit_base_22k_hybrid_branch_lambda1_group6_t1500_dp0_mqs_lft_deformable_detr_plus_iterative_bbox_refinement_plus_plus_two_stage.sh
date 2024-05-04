@@ -22,5 +22,5 @@ python -u main.py \
     --mixed_selection \
     --look_forward_twice \
     --backbone simvit_base \
-    --pretrained_backbone_path /data/pwojcik/SimMIM/TCGA_256/checkpoint-latest.pth \
+    --pretrained_backbone_path /data/pwojcik/SimMIM/output_dir_ft/encoder-1600.pth \
     ${PY_ARGS}
