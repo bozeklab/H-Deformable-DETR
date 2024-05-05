@@ -16,7 +16,7 @@ import PIL
 import torch
 import torchvision.transforms as T
 import torchvision.transforms.functional as F
-from PIL import ImageFilter
+from PIL import ImageFilter, ImageOps
 
 from util.box_ops import box_xyxy_to_cxcywh
 from util.misc import interpolate
@@ -216,6 +216,15 @@ class GaussianBlur(object):
         if random.random() < self.p:
             sigma = random.uniform(self.sigma[0], self.sigma[1])
             img = img.filter(ImageFilter.GaussianBlur(radius=sigma))
+        return img, target
+
+class Solarize(object):
+    def __init__(self, p=0.2):
+        self.p = p
+
+    def __call__(self, img, target):
+        if random.random() < self.p:
+            return ImageOps.solarize(img), target
         return img, target
 
 class RandomGrayscale(object):
