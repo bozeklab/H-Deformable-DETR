@@ -146,7 +146,7 @@ class DeformableDETR(nn.Module):
             # hack implementation for iterative bounding box refinement
             self.transformer.decoder.bbox_embed = self.bbox_embed
         else:
-            print('!!!')
+            print('!!refine!')
             nn.init.constant_(self.bbox_embed.layers[-1].bias.data[2:], -2.0)
             self.class_embed = nn.ModuleList(
                 [self.class_embed for _ in range(num_pred)]
