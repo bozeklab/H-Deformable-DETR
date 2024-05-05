@@ -7,7 +7,6 @@ PY_ARGS=${@:1}
 
 python -u main.py \
     --output_dir ${EXP_DIR} \
-    --two_stage \
     --dim_feedforward 2048 \
     --epochs 12 \
     --use_wandb \

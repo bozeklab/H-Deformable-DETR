@@ -151,8 +151,6 @@ class DeformableDETR(nn.Module):
                 [self.class_embed for _ in range(num_pred)]
             )
             self.bbox_embed = nn.ModuleList([self.bbox_embed for _ in range(num_pred)])
-            print('!!!!!!')
-            print(self.bbox_embed)
             self.transformer.decoder.bbox_embed = None
         if two_stage:
             # hack implementation for two-stage
