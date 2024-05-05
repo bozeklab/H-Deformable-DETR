@@ -154,6 +154,7 @@ def make_coco_transforms(image_set):
         return T.Compose(
             [
                 T.RandomHorizontalFlip(),
+                T.RandomVerticalFlip(),
                 T.GaussianBlur(),
                 T.RandomGrayscale(),
                 T.ColorJitter(),
