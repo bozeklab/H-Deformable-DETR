@@ -7,6 +7,8 @@ PY_ARGS=${@:1}
 
 python -u main.py \
     --output_dir ${EXP_DIR} \
+    --with_box_refine \
+    --two_stage \
     --dim_feedforward 2048 \
     --epochs 12 \
     --use_wandb \
@@ -14,7 +16,7 @@ python -u main.py \
     --num_queries_one2one 300 \
     --num_queries_one2many 1500 \
     --lr_backbone_names body.backbone \
-    --k_one2many 6 \
+    --k_one2many 3 \
     --lambda_one2many 1.0 \
     --dropout 0.0 \
     --mixed_selection \
