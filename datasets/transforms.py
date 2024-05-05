@@ -91,10 +91,10 @@ def vflip(image, target):
     target = target.copy()
     if "boxes" in target:
         boxes = target["boxes"]
-        print(boxes)
         boxes = boxes[:, [2, 1, 0, 3]] * torch.as_tensor(
             [1, -1, 1, -1]
         ) + torch.as_tensor([0, h, 0, h])
+        print(boxes)
         #target["boxes"] = boxes
 
     if "masks" in target:
