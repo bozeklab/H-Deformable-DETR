@@ -97,6 +97,8 @@ def vflip(image, target):
         target["boxes"] = boxes
 
     if "masks" in target:
+        print('!!!')
+        print('dupa')
         target["masks"] = target["masks"].flip(-2)
 
     return flipped_image, target
