@@ -16,7 +16,7 @@ python -u main.py \
     --num_queries_one2one 300 \
     --num_queries_one2many 1500 \
     --lr_backbone_names body.backbone \
-    --k_one2many 3 \
+    --k_one2many 1 \
     --lambda_one2many 1.0 \
     --dropout 0.0 \
     --mixed_selection \
