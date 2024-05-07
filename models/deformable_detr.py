@@ -179,8 +179,8 @@ class DeformableDETR(nn.Module):
             samples = nested_tensor_from_tensor_list(samples)
         features, pos = self.backbone(samples)
 
-        print('!!!!')
-        print(features.shape)
+        #print('!!!!')
+        #print(features.shape)
 
         srcs = []
         masks = []
