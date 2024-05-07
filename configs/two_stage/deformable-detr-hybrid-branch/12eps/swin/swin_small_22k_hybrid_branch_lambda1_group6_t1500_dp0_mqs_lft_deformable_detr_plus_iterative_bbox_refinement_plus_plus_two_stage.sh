@@ -20,5 +20,5 @@ python -u main.py \
     --mixed_selection \
     --look_forward_twice \
     --backbone swin_small \
-    --pretrained_backbone_path /mnt/pretrained_backbone/swin_small_patch4_window7_224_22k.pth \
+    --pretrained_backbone_path /data/pwojcik/H-Deformable-DETR/swin_small_patch4_window7_224_22k.pth \
     ${PY_ARGS}
