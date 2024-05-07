@@ -16,6 +16,7 @@ import PIL
 import torch
 import torchvision.transforms as T
 import torchvision.transforms.functional as F
+from PIL import ImageFilter, ImageOps
 
 from util.box_ops import box_xyxy_to_cxcywh
 from util.misc import interpolate
@@ -79,6 +80,24 @@ def hflip(image, target):
 
     if "masks" in target:
         target["masks"] = target["masks"].flip(-1)
+
+    return flipped_image, target
+
+def vflip(image, target):
+    flipped_image = F.vflip(image)
+
+    w, h = image.size
+
+    target = target.copy()
+    if "boxes" in target:
+        boxes = target["boxes"]
+        boxes = boxes[:, [0, 3, 2, 1]] * torch.as_tensor(
+            [1, -1, 1, -1]
+        ) + torch.as_tensor([0, h, 0, h])
+        target["boxes"] = boxes
+
+    if "masks" in target:
+        target["masks"] = target["masks"].flip(-2)
 
     return flipped_image, target
 
@@ -171,6 +190,52 @@ class RandomCrop(object):
         region = T.RandomCrop.get_params(img, self.size)
         return crop(img, target, region)
 
+class ColorJitter(object):
+    def __init__(self, brightness=0.25, contrast=0.25, saturation=0.1, hue=0.05, p=0.3):
+        self.brightness = brightness
+        self.contrast = contrast
+        self.saturation = saturation
+        self.hue = hue
+        self.p = p
+
+    def __call__(self, img, target):
+        if random.random() < self.p:
+            t = T.ColorJitter(brightness=self.brightness, contrast=self.contrast,
+                              saturation=self.saturation, hue=self.hue)
+            return t(img), target
+        else:
+            return img, target
+
+class GaussianBlur(object):
+    """Gaussian blur augmentation in SimCLR https://arxiv.org/abs/2002.05709"""
+    def __init__(self, sigma=[.1, 2.], p=0.1):
+        self.sigma = sigma
+        self.p = p
+
+    def __call__(self, img, target):
+        if random.random() < self.p:
+            sigma = random.uniform(self.sigma[0], self.sigma[1])
+            img = img.filter(ImageFilter.GaussianBlur(radius=sigma))
+        return img, target
+
+class Solarize(object):
+    def __init__(self, p=0.2):
+        self.p = p
+
+    def __call__(self, img, target):
+        if random.random() < self.p:
+            return ImageOps.solarize(img), target
+        return img, target
+
+class RandomGrayscale(object):
+    def __init__(self, p=0.1):
+        self.p = p
+
+    def __call__(self, img, target):
+        if random.random() < self.p:
+            return T.RandomGrayscale()(img), target
+        return img, target
+
 
 class RandomSizeCrop(object):
     def __init__(self, min_size: int, max_size: int):
@@ -205,6 +270,14 @@ class RandomHorizontalFlip(object):
             return hflip(img, target)
         return img, target
 
+class RandomVerticalFlip(object):
+    def __init__(self, p=0.5):
+        self.p = p
+
+    def __call__(self, img, target):
+        if random.random() < self.p:
+            return vflip(img, target)
+        return img, target
 
 class RandomResize(object):
     def __init__(self, sizes, max_size=None):
