@@ -12,7 +12,7 @@ python -u main.py \
     --lr_backbone_names body.backbone \
     --dim_feedforward 2048 \
     --epochs 72 \
-    --lr_drop 60 \
+    --lr_drop 66 \
     --num_queries_one2one 300 \
     --num_queries_one2many 1500 \
     --k_one2many 3 \
