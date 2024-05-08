@@ -212,7 +212,7 @@ class TransformerBackbone(nn.Module):
                 drop_path_rate=args.drop_path_rate,
                 init_values=None)
             backbone = SimpleFeaturePyramidWrapper(backbone=encoder)
-            embed_dim = 384
+            embed_dim = 512
             checkpoint = torch.load(args.pretrained_backbone_path, map_location='cpu')
             checkpoint_model = checkpoint['model']
             #checkpoint_model.update(neck_dict)
