@@ -22,6 +22,7 @@ import os
 
 import numpy as np
 import torch
+import wandb
 from torch.utils.data import DataLoader
 import datasets
 import util.misc as utils
@@ -204,6 +205,7 @@ def get_args_parser():
 
     # dataset parameters
     parser.add_argument("--dataset_file", default="coco")
+    parser.add_argument("--group-name", default="H-Detr")
     parser.add_argument("--coco_path", default="./data/coco", type=str)
     parser.add_argument("--coco_panoptic_path", type=str)
     parser.add_argument("--remove_difficult", action="store_true")
@@ -258,6 +260,14 @@ def main(args):
     torch.manual_seed(seed)
     np.random.seed(seed)
     random.seed(seed)
+
+    if args.use_wandb and utils.is_main_process():
+        wandb.init(
+            project="HDetr",
+            name=args.run_name,
+            group=args.group_name,
+            config=vars(args)
+        )
 
     model, criterion, postprocessors = build_model(args)
     model.to(device)
