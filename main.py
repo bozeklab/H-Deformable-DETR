@@ -242,6 +242,8 @@ def get_args_parser():
 
     # * logging technologies
     parser.add_argument("--use_wandb", action="store_true", default=False)
+    parser.add_argument('--run-name', default=None, type=str, help='wandb run name')
+    parser.add_argument('--group-name', default=None, type=str, help='wandb group name')
     return parser
 
 
