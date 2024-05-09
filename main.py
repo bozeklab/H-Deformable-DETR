@@ -489,7 +489,7 @@ def main(args):
                     checkpoint_path,
                 )
 
-        if epoch in [0, 11, 35]:
+        if epoch in [0, 11, 35] or epoch >= 40:
             test_stats, coco_evaluator = evaluate(
                 model,
                 criterion,
