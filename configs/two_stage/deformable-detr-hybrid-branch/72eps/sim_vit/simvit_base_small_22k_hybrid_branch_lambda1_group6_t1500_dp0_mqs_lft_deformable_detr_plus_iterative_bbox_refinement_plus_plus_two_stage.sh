@@ -18,6 +18,7 @@ python -u main.py \
     --k_one2many 3 \
     --lambda_one2many 1.0 \
     --dropout 0.0 \
+    --use-wandb \
     --mixed_selection \
     --look_forward_twice \
     --backbone simvit_base \
