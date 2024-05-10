@@ -13,10 +13,11 @@ python -u main.py \
     --epochs 12 \
     --use_wandb \
     --lr_drop 11 \
+    --dec_layers 4 \
     --num_queries_one2one 300 \
     --num_queries_one2many 1500 \
     --lr_backbone_names body.backbone \
-    --k_one2many 1 \
+    --k_one2many 3 \
     --lambda_one2many 1.0 \
     --dropout 0.0 \
     --mixed_selection \
