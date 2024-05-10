@@ -159,7 +159,7 @@ def make_coco_transforms(image_set):
                 #T.Solarize(),
                 T.RandomGrayscale(),
                 T.GaussianBlur(),
-                T.RandomHEStain(),
+                #T.RandomHEStain(),
                 T.RandomSelect(
                     T.Compose(
                         [
