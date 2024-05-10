@@ -508,7 +508,7 @@ class SimpleFeaturePyramidWrapper(nn.Module):
 
         self.backbone = backbone
 
-        self.neck = SimpleFeaturePyramid(in_feature='outcome', out_channels=512,
+        self.neck = SimpleFeaturePyramid(in_feature='outcome', out_channels=384,
                                          scale_factors=(4.0, 2.0, 1.0), top_block=None, norm="LN", square_pad=None)
 
     def forward(self, images):

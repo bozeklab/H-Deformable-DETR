@@ -14,6 +14,8 @@ import random
 
 import PIL
 import torch
+import numpy as np
+import skimage
 import torchvision.transforms as T
 import torchvision.transforms.functional as F
 from PIL import ImageFilter, ImageOps
@@ -190,6 +192,7 @@ class RandomCrop(object):
         region = T.RandomCrop.get_params(img, self.size)
         return crop(img, target, region)
 
+
 class ColorJitter(object):
     def __init__(self, brightness=0.25, contrast=0.25, saturation=0.1, hue=0.05, p=0.3):
         self.brightness = brightness
@@ -206,6 +209,7 @@ class ColorJitter(object):
         else:
             return img, target
 
+
 class GaussianBlur(object):
     """Gaussian blur augmentation in SimCLR https://arxiv.org/abs/2002.05709"""
     def __init__(self, sigma=[.1, 2.], p=0.1):
@@ -218,6 +222,7 @@ class GaussianBlur(object):
             img = img.filter(ImageFilter.GaussianBlur(radius=sigma))
         return img, target
 
+
 class Solarize(object):
     def __init__(self, p=0.2):
         self.p = p
@@ -226,6 +231,7 @@ class Solarize(object):
         if random.random() < self.p:
             return ImageOps.solarize(img), target
         return img, target
+
 
 class RandomGrayscale(object):
     def __init__(self, p=0.1):
@@ -298,6 +304,23 @@ class RandomPad(object):
         pad_x = random.randint(0, self.max_pad)
         pad_y = random.randint(0, self.max_pad)
         return pad(img, target, (pad_x, pad_y))
+
+
+class RandomHEStain(object):
+    """Transfer the given PIL.Image from rgb to HE, perturbate, transfer back to rgb """
+    def __init__(self, p=0.3):
+        self.p = p
+
+    def __call__(self, img, target):
+        if random.random() < self.p:
+            img_he = skimage.color.rgb2hed(img)
+            img_he[:, :, 0] = img_he[:, :, 0] * random.normal(1.0, 0.02, 1)  # H
+            img_he[:, :, 1] = img_he[:, :, 1] * random.normal(1.0, 0.02, 1)  # E
+            img_rgb = np.clip(skimage.color.hed2rgb(img_he), 0, 1)
+            img = PIL.Image.fromarray(np.uint8(img_rgb * 255.999))
+            return img, target
+        else:
+            return img, target
 
 
 class RandomSelect(object):
