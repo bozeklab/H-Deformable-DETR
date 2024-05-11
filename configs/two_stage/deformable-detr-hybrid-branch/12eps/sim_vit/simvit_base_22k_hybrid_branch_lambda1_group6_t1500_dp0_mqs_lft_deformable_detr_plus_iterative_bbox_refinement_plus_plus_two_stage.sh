@@ -12,7 +12,6 @@ python -u main.py \
     --dim_feedforward 2048 \
     --epochs 12 \
     --lr_drop 11 \
-    --dec_layers 4 \
     --num_queries_one2one 300 \
     --num_queries_one2many 1500 \
     --lr_backbone_names body.backbone \
