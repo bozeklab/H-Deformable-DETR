@@ -13,10 +13,9 @@ python -u main.py \
     --dim_feedforward 2048 \
     --epochs 36 \
     --lr_drop 30 \
-    --k_one2many 3 \
     --num_queries_one2one 300 \
     --num_queries_one2many 1500 \
-    --k_one2many 6 \
+    --k_one2many 3 \
     --lambda_one2many 1.0 \
     --dropout 0.0 \
     --mixed_selection \
