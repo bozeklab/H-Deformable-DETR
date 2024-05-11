@@ -308,7 +308,7 @@ class RandomPad(object):
 
 class RandomHEStain(object):
     """Transfer the given PIL.Image from rgb to HE, perturbate, transfer back to rgb """
-    def __init__(self, p=0.3):
+    def __init__(self, p=0.4):
         self.p = p
 
     def __call__(self, img, target):
