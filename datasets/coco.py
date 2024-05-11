@@ -158,7 +158,7 @@ def make_coco_transforms(image_set):
                 T.GaussianBlur(),
                 #T.Solarize(),
                 T.RandomGrayscale(),
-                T.RandomHEStain(),
+                #T.RandomHEStain(),
                 T.ColorJitter(),
                 T.GaussianBlur(),
                 T.RandomSelect(
