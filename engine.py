@@ -184,6 +184,7 @@ def predict_prompts(prompts_paths, dataset_name, model, postprocessors):
     val_files = np.load(f'/data/pwojcik/PromptNucSeg/segmentor/datasets/{dataset_name}_val_files.npy')
     process_files(val_files, model, postprocessors)
 
+SCORE_THRESHOLD = 0.355
 
 def process_files(files, model, postprocessors):
     for file in sorted(tqdm(files)):
@@ -198,11 +199,15 @@ def process_files(files, model, postprocessors):
 
         orig_target_sizes = torch.stack([torch.as_tensor([256, 256])], dim=0).to('cuda')
         results = postprocessors["bbox"](outputs, orig_target_sizes)
-        print('!!!')
-        print(len(results))
+        scores = results[0]['scores']
+        boxes = results[0]['boxes']
+        labels = results[0]['labels']
 
-        #scores = results[i]['scores'] >= 0.375
-        #boxes = results[i]['boxes']
+        boxes = boxes[scores >= SCORE_THRESHOLD]
+        labels = labels[scores >= SCORE_THRESHOLD]
+
+        print(labels)
+
 
 @torch.no_grad()
 def evaluate(
