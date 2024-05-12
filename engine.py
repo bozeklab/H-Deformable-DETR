@@ -179,15 +179,15 @@ def predict_prompts(prompts_paths, dataset_name, model, postprocessors):
     mkdir(f'../segmentor/{prompts_paths}')
     print('Test files')
     test_files = np.load(f'/data/pwojcik/PromptNucSeg/segmentor/datasets/{dataset_name}_test_files.npy')
-    process_files(test_files, model, postprocessors)
+    process_files(prompts_paths, test_files, model, postprocessors)
     print('Val files')
     val_files = np.load(f'/data/pwojcik/PromptNucSeg/segmentor/datasets/{dataset_name}_val_files.npy')
-    process_files(val_files, model, postprocessors)
+    process_files(prompts_paths, val_files, model, postprocessors)
 
 SCORE_THRESHOLD = 0.355
 
 
-def process_files(files, model, postprocessors):
+def process_files(prompts_paths, files, model, postprocessors):
     for file in sorted(tqdm(files)):
         img = io.imread(f'/data/pwojcik/PromptNucSeg/segmentor/{file}')[..., :3]
 
@@ -211,11 +211,11 @@ def process_files(files, model, postprocessors):
         boxes = boxes.detach().cpu().numpy()
         labels = labels.detach().cpu().numpy()
         save_content = np.concatenate([boxes, labels[:, None]], axis=-1)
-        print(save_content)
-        #np.save(
-        #    f'../segmentor/{cfg.prompts_path}{file.split("/")[-1][:-4]}',
-        #    save_content
-        #)
+        #print(save_content)
+        np.save(
+            f'/data/pwojcik/PromptNucSeg/segmentor/{prompts_paths}{file.split("/")[-1][:-4]}',
+            save_content
+        )
 
 
 @torch.no_grad()
