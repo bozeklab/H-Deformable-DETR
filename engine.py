@@ -179,6 +179,7 @@ def predict_prompts(prompts_paths, dataset_name, model, postprocessors):
     mkdir(f'../segmentor/{prompts_paths}')
     print('Test files')
     test_files = np.load(f'/data/pwojcik/PromptNucSeg/segmentor/datasets/{dataset_name}_test_files.npy')
+    print(test_files)
     process_files(test_files, model, postprocessors)
     print('Val files')
     val_files = np.load(f'/data/pwojcik/PromptNucSeg/segmentor/datasets/{dataset_name}_val_files.npy')
