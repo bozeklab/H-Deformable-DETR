@@ -176,7 +176,7 @@ def train_one_epoch(
 
 
 def predict_prompts(prompts_paths, dataset_name, model, postprocessors):
-    mkdir(f'../segmentor/{prompts_paths}')
+    mkdir(f'/data/pwojcik/PromptNucSeg/segmentor/prompts/pannuke123_boxes/{prompts_paths}')
     print('Test files')
     test_files = np.load(f'/data/pwojcik/PromptNucSeg/segmentor/datasets/{dataset_name}_test_files.npy')
     process_files(prompts_paths, test_files, model, postprocessors)
