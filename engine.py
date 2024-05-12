@@ -192,7 +192,7 @@ def process_files(files, model, postprocessors):
         normalize = T.Compose(
             [T.ToTensor(), T.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])]
         )
-        transform = T.Compose([T.RandomResize([256], max_size=1333), normalize])
+        transform = T.Compose([T.Resize(256), normalize])
         image = transform(image=img)['image'].unsqueeze(0).to('cuda')
         samples = utils.nested_tensor_from_tensor_list([image])
         outputs = model(samples)
