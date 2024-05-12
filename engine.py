@@ -261,7 +261,7 @@ def evaluate(
     target_all = {}
 
     print('Starting to produce prompts')
-    predict_prompts(prompts_paths='/data/pwojcik/PromptNucSeg/segmentor/prompts_boxes', dataset_name='pannuke123',
+    predict_prompts(prompts_paths='prompts_boxes', dataset_name='pannuke123',
                     model=model, postprocessors=postprocessors)
     print('Done')
 
