@@ -16,7 +16,6 @@ Train and eval functions used in main.py
 """
 import math
 import os
-from utils import predict, mkdir
 import sys
 from typing import Iterable
 import copy
@@ -26,6 +25,7 @@ import wandb
 import torch
 import numpy as np
 from tqdm import tqdm
+import errno
 from skimage import io
 from torchvision.utils import save_image
 
@@ -35,6 +35,13 @@ from datasets.panoptic_eval import PanopticEvaluator
 from datasets.data_prefetcher import data_prefetcher
 
 scaler = torch.cuda.amp.GradScaler()
+
+def mkdir(path):
+    try:
+        os.makedirs(path)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
 
 
 def train_hybrid(outputs, targets, k_one2many, criterion, lambda_one2many):
