@@ -207,6 +207,9 @@ def process_files(files, model, postprocessors):
         boxes = boxes[scores >= SCORE_THRESHOLD]
         labels = labels[scores >= SCORE_THRESHOLD]
         labels = labels - 1
+
+        boxes = boxes.detach().cpu().numpy()
+        labels = labels.detach().cpu().numpy()
         save_content = np.concatenate([boxes, labels[:, None]], axis=-1)
         print(save_content)
         #np.save(
