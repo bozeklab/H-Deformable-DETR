@@ -188,12 +188,13 @@ def predict_prompts(prompts_paths, dataset_name, model, postprocessors):
 def process_files(files, model, postprocessors):
     for file in sorted(tqdm(files)):
         img = io.imread(f'/data/pwojcik/PromptNucSeg/segmentor/{file}')[..., :3]
+        print(img)
 
         normalize = T.Compose(
             [T.ToTensor(), T.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])]
         )
         transform = T.Compose([T.Resize(256), normalize])
-        image = transform(img).unsqueeze(0).to('cuda')
+        image = transform(torch.tensor(img)).unsqueeze(0).to('cuda')
         samples = utils.nested_tensor_from_tensor_list([image])
         outputs = model(samples)
 
