@@ -205,8 +205,8 @@ def process_files(files, model, postprocessors):
 
         boxes = boxes[scores >= SCORE_THRESHOLD]
         labels = labels[scores >= SCORE_THRESHOLD]
-
-        print(labels)
+        labels = labels - 1
+        print(boxes)
 
 
 @torch.no_grad()
@@ -252,7 +252,7 @@ def evaluate(
     target_all = {}
 
     print('Starting to produce prompts')
-    predict_prompts(prompts_paths='/data/pwojcik/PromptNucSeg/segmentor/prompts', dataset_name='pannuke123',
+    predict_prompts(prompts_paths='/data/pwojcik/PromptNucSeg/segmentor/prompts_boxes', dataset_name='pannuke123',
                     model=model, postprocessors=postprocessors)
     print('Done')
 
