@@ -186,6 +186,7 @@ def predict_prompts(prompts_paths, dataset_name, model, postprocessors):
 
 SCORE_THRESHOLD = 0.355
 
+
 def process_files(files, model, postprocessors):
     for file in sorted(tqdm(files)):
         img = io.imread(f'/data/pwojcik/PromptNucSeg/segmentor/{file}')[..., :3]
@@ -206,7 +207,12 @@ def process_files(files, model, postprocessors):
         boxes = boxes[scores >= SCORE_THRESHOLD]
         labels = labels[scores >= SCORE_THRESHOLD]
         labels = labels - 1
-        print(boxes)
+        save_content = np.concatenate([boxes, labels[:, None]], axis=-1)
+        print(save_content)
+        #np.save(
+        #    f'../segmentor/{cfg.prompts_path}{file.split("/")[-1][:-4]}',
+        #    save_content
+        #)
 
 
 @torch.no_grad()
