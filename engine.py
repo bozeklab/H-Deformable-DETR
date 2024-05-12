@@ -175,12 +175,13 @@ def train_one_epoch(
     return {k: meter.global_avg for k, meter in metric_logger.meters.items()}
 
 
-def predict_prompts(prompts_paths, dataset):
+def predict_prompts(prompts_paths, dataset_name, model, postprocessors):
     mkdir(f'../segmentor/{prompts_paths}')
-    test_files = np.load(f'../segmentor/datasets/{dataset}_test_files.npy')
-    val_files = np.load(f'../segmentor/datasets/{dataset}_val_files.npy')
+    test_files = np.load(f'../segmentor/datasets/{dataset_name}_test_files.npy')
+    val_files = np.load(f'../segmentor/datasets/{dataset_name}_val_files.npy')
 
-def process_files(files):
+
+def process_files(files, model, postprocessors):
     for file in sorted(tqdm(files)):
         img = io.imread(f'../segmentor/{file}')[..., :3]
 
@@ -189,6 +190,14 @@ def process_files(files):
         )
         transform = T.Compose([T.RandomResize([256], max_size=1333), normalize])
         image = transform(image=img)['image'].unsqueeze(0).to('cuda')
+        samples = utils.nested_tensor_from_tensor_list([image])
+        outputs = model(samples)
+
+        orig_target_sizes = torch.stack([torch.as_tensor([256, 256])], dim=0)
+        results = postprocessors["bbox"](outputs, orig_target_sizes)
+
+        print(results)
+
 
 @torch.no_grad()
 def evaluate(
@@ -232,9 +241,14 @@ def evaluate(
     results_all = {}
     target_all = {}
 
+    print('Starting to produce prompts')
+    predict_prompts(prompts_paths='/data/pwojcik/PromptNucSeg/segmentor/prompts', dataset_name='pannuke123',
+                    model=model, postprocessors=postprocessors)
+    print('Done')
+
     for samples, targets in metric_logger.log_every(data_loader, 10, header):
         #print(len(samples))
-        print(samples.mask.shape)
+        #print(samples.mask.shape)
         samples = samples.to(device)
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
 
