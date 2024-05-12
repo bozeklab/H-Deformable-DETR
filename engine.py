@@ -233,8 +233,9 @@ def evaluate(
     target_all = {}
 
     for samples, targets in metric_logger.log_every(data_loader, 10, header):
-        print(len(samples))
+        #print(len(samples))
         print(samples[0].shape)
+        print(samples[1].shape)
         samples = samples.to(device)
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
 
