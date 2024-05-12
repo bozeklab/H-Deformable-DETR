@@ -16,12 +16,17 @@ Train and eval functions used in main.py
 """
 import math
 import os
+from utils import predict, mkdir
 import sys
 from typing import Iterable
 import copy
+import torchvision.transforms as T
 
 import wandb
 import torch
+import numpy as np
+from tqdm import tqdm
+from skimage import io
 from torchvision.utils import save_image
 
 import util.misc as utils
@@ -163,6 +168,21 @@ def train_one_epoch(
     return {k: meter.global_avg for k, meter in metric_logger.meters.items()}
 
 
+def predict_prompts(prompts_paths, dataset):
+    mkdir(f'../segmentor/{prompts_paths}')
+    test_files = np.load(f'../segmentor/datasets/{dataset}_test_files.npy')
+    val_files = np.load(f'../segmentor/datasets/{dataset}_val_files.npy')
+
+def process_files(files):
+    for file in sorted(tqdm(files)):
+        img = io.imread(f'../segmentor/{file}')[..., :3]
+
+        normalize = T.Compose(
+            [T.ToTensor(), T.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])]
+        )
+        transform = T.Compose([T.RandomResize([256], max_size=1333), normalize])
+        image = transform(image=img)['image'].unsqueeze(0).to('cuda')
+
 @torch.no_grad()
 def evaluate(
     model,
@@ -206,6 +226,7 @@ def evaluate(
     target_all = {}
 
     for samples, targets in metric_logger.log_every(data_loader, 10, header):
+        print(samples)
         samples = samples.to(device)
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
 
