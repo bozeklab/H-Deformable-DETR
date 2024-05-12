@@ -198,9 +198,11 @@ def process_files(files, model, postprocessors):
 
         orig_target_sizes = torch.stack([torch.as_tensor([256, 256])], dim=0).to('cuda')
         results = postprocessors["bbox"](outputs, orig_target_sizes)
+        print('!!!')
+        print(len(results))
 
-        print(results)
-
+        #scores = results[i]['scores'] >= 0.375
+        #boxes = results[i]['boxes']
 
 @torch.no_grad()
 def evaluate(
