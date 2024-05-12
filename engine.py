@@ -196,7 +196,7 @@ def process_files(files, model, postprocessors):
         samples = utils.nested_tensor_from_tensor_list([image]).to('cuda')
         outputs = model(samples)
 
-        orig_target_sizes = torch.stack([torch.as_tensor([256, 256])], dim=0)
+        orig_target_sizes = torch.stack([torch.as_tensor([256, 256])], dim=0).to('cuda')
         results = postprocessors["bbox"](outputs, orig_target_sizes)
 
         print(results)
