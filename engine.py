@@ -36,6 +36,15 @@ from datasets.data_prefetcher import data_prefetcher
 
 scaler = torch.cuda.amp.GradScaler()
 
+def clip_bbox(bbox_tensor):
+    # Clip bounding box coordinates to the interval [0, 255]
+    bbox_tensor[:, 0].clamp_(min=0, max=255)  # xmin
+    bbox_tensor[:, 1].clamp_(min=0, max=255)  # ymin
+    bbox_tensor[:, 2].clamp_(min=0, max=255)  # xmax
+    bbox_tensor[:, 3].clamp_(min=0, max=255)  # ymax
+    return bbox_tensor
+
+
 def mkdir(path):
     try:
         os.makedirs(path)
@@ -207,6 +216,8 @@ def process_files(prompts_paths, files, model, postprocessors):
         boxes = boxes[scores >= SCORE_THRESHOLD]
         labels = labels[scores >= SCORE_THRESHOLD]
         labels = labels - 1
+
+        boxes = clip_bbox(boxes)
 
         boxes = boxes.detach().cpu().numpy()
         labels = labels.detach().cpu().numpy()
