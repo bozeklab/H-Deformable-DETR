@@ -193,7 +193,7 @@ def predict_prompts(prompts_paths, dataset_name, model, postprocessors):
     val_files = np.load(f'/data/pwojcik/PromptNucSeg/segmentor/datasets/{dataset_name}_val_files.npy')
     process_files(prompts_paths, val_files, model, postprocessors)
 
-SCORE_THRESHOLD = 0.355
+SCORE_THRESHOLD = 0.350
 
 
 def process_files(prompts_paths, files, model, postprocessors):
@@ -224,7 +224,7 @@ def process_files(prompts_paths, files, model, postprocessors):
         save_content = np.concatenate([boxes, labels[:, None]], axis=-1)
         #print(save_content)
         np.save(
-            f'/data/pwojcik/PromptNucSeg/segmentor/prompts/pannuke123_boxes/{file.split("/")[-1][:-4]}',
+            f'/data/pwojcik/PromptNucSeg/segmentor/prompts/pannuke123_boxes_035/{file.split("/")[-1][:-4]}',
             save_content
         )
 
