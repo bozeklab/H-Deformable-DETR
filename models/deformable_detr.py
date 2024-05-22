@@ -605,8 +605,6 @@ def build(args):
 
     backbone = build_backbone(args)
 
-    print('!!!!!')
-
     transformer = build_deforamble_transformer(args)
     model = DeformableDETR(
         backbone,
