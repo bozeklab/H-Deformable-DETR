@@ -734,10 +734,10 @@ class SwinTransformer(nn.Module):
                     .contiguous()
                 )
                 outs[str(i)] = out
-        for key in outs.keys():
-            print(key)
-            print(outs[key].shape)
-        print()
+       #for key in outs.keys():
+       #     print(key)
+       #     print(outs[key].shape)
+       # print()
         return outs
 
     def train(self, mode=True):
