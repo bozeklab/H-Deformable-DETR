@@ -706,8 +706,6 @@ class SwinTransformer(nn.Module):
 
     def forward(self, x):
         """Forward function."""
-        print('trans')
-        print(x.shape)
         #assert(x.shape[2] == x.shape[3])
         x = self.patch_embed(x)
         Wh, Ww = x.size(2), x.size(3)
