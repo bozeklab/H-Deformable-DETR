@@ -33,6 +33,7 @@ import util.misc as utils
 from datasets.coco_eval import CocoEvaluator, convert_to_xywh
 from datasets.panoptic_eval import PanopticEvaluator
 from datasets.data_prefetcher import data_prefetcher
+from util import box_ops
 
 scaler = torch.cuda.amp.GradScaler()
 
@@ -323,6 +324,8 @@ def evaluate(
             im = img[i]
             scores = results[i]['scores'] >= 0.355
             boxes = results[i]['boxes']
+            boxes_r = results[i]['boxes']
+            boxes_r = box_ops.box_cxcywh_to_xyxy(boxes_r)
             results_all.update({image_id: (results[i]['scores'], results[i]['boxes'], results[i]['labels'])})
             target_all.update({image_id: (targets[i]['boxes'], targets[i]['labels'])})
 
@@ -330,7 +333,7 @@ def evaluate(
             im = (im * 255).clamp(0, 255).to(torch.uint8)
             boxes = results[i]['boxes'] * (800 / 256)
             drawn_boxes = draw_bounding_boxes(im, boxes[scores], colors="red")
-            #drawn_boxes = draw_bounding_boxes(drawn_boxes, targets[i]['boxes'], colors="red")
+            drawn_boxes = draw_bounding_boxes(drawn_boxes, boxes_r, colors="blue")
             import torchvision.transforms.functional as TF
             image = TF.to_pil_image(drawn_boxes)
             image.save(f'/data/pwojcik/detr_dump/img_{image_id}.png')
