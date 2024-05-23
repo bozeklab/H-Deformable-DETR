@@ -325,6 +325,7 @@ def evaluate(
             scores = results[i]['scores'] >= 0.355
             boxes = results[i]['boxes']
             boxes_r = targets[i]['boxes']
+            print(boxes_r)
             boxes_r = box_ops.box_cxcywh_to_xyxy(boxes_r)
             results_all.update({image_id: (results[i]['scores'], results[i]['boxes'], results[i]['labels'])})
             target_all.update({image_id: (targets[i]['boxes'], targets[i]['labels'])})
@@ -354,6 +355,7 @@ def evaluate(
     import pickle
     print('!!!')
     print(len(results_all.keys()))
+
     with open('/data/pwojcik/detr_dump/results.pkl', 'wb') as f:
         pickle.dump(results_all, f)
     with open('/data/pwojcik/detr_dump/target.pkl', 'wb') as f:
