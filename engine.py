@@ -321,8 +321,9 @@ def evaluate(
             image_id = targets[i]["image_id"].item()
             #print(targets[i]["labels"])
             im = img[i]
-            scores = results[i]['scores'] >= 0.375
+            scores = results[i]['scores'] >= 0.355
             boxes = results[i]['boxes']
+            print(boxes)
             results_all.update({image_id: (results[i]['scores'], results[i]['boxes'], results[i]['labels'])})
             target_all.update({image_id: (targets[i]['boxes'], targets[i]['labels'])})
 
