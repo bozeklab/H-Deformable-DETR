@@ -328,6 +328,7 @@ def evaluate(
 
             from torchvision.utils import draw_bounding_boxes
             im = (im * 255).clamp(0, 255).to(torch.uint8)
+            boxes = results[i]['boxes'] * (800 / 256)
             drawn_boxes = draw_bounding_boxes(im, boxes[scores], colors="red")
             #drawn_boxes = draw_bounding_boxes(drawn_boxes, targets[i]['boxes'], colors="red")
             import torchvision.transforms.functional as TF
