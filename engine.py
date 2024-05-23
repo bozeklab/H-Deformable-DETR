@@ -332,6 +332,7 @@ def evaluate(
 
             from torchvision.utils import draw_bounding_boxes
             im = (im * 255).clamp(0, 255).to(torch.uint8)
+            print(boxes)
             boxes = results[i]['boxes'] * (800 / 256)
             drawn_boxes = draw_bounding_boxes(im, boxes[scores], colors="red")
             drawn_boxes = draw_bounding_boxes(drawn_boxes, boxes_r, colors="blue")
