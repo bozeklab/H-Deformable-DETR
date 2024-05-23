@@ -325,7 +325,7 @@ def evaluate(
             scores = results[i]['scores'] >= 0.355
             boxes = results[i]['boxes']
             boxes_r = targets[i]['boxes']
-            boxes_r = box_ops.box_cxcywh_to_xyxy(boxes_r) * (800 / 256)
+            boxes_r = box_ops.box_cxcywh_to_xyxy(boxes_r) * 800
             print(boxes_r)
             results_all.update({image_id: (results[i]['scores'], results[i]['boxes'], results[i]['labels'])})
             target_all.update({image_id: (targets[i]['boxes'], targets[i]['labels'])})
