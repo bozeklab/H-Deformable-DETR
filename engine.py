@@ -329,7 +329,7 @@ def evaluate(
             from torchvision.utils import draw_bounding_boxes
             im = (im * 255).clamp(0, 255).to(torch.uint8)
             drawn_boxes = draw_bounding_boxes(im, boxes[scores], colors="red")
-            drawn_boxes = draw_bounding_boxes(drawn_boxes, targets[i]['boxes'][scores], colors="red")
+            drawn_boxes = draw_bounding_boxes(drawn_boxes, targets[i]['boxes'], colors="red")
             import torchvision.transforms.functional as TF
             image = TF.to_pil_image(drawn_boxes)
             image.save(f'/data/pwojcik/detr_dump/img_{image_id}.png')
