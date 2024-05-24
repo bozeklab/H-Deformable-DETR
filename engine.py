@@ -330,9 +330,6 @@ def evaluate(
             results_all.update({image_id: (results[i]['scores'], results[i]['boxes'], results[i]['labels'])})
             target_all.update({image_id: (targets[i]['boxes'], targets[i]['labels'])})
 
-            print('!!!')
-            print(targets[i]['boxes'].shape)
-
             from torchvision.utils import draw_bounding_boxes
             im = (im * 255).clamp(0, 255).to(torch.uint8)
             #print(boxes)
