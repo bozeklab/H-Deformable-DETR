@@ -322,6 +322,8 @@ def evaluate(
             image_id = targets[i]["image_id"].item()
             #print(targets[i]["labels"])
             im = img[i]
+            print('!!!')
+            print(im.shape)
             scores = results[i]['scores'] >= 0.355
             boxes = results[i]['boxes'].clone()
             boxes_r = targets[i]['boxes'].clone()
