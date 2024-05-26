@@ -359,9 +359,9 @@ def evaluate(
     print('!!!')
     print(len(results_all.keys()))
 
-    with open('/data/pwojcik/detr_dump3/results.pkl', 'wb') as f:
+    with open('/data/pwojcik/detr_dump4/results.pkl', 'wb') as f:
         pickle.dump(results_all, f)
-    with open('/data/pwojcik/detr_dump3/target.pkl', 'wb') as f:
+    with open('/data/pwojcik/detr_dump4/target.pkl', 'wb') as f:
         pickle.dump(target_all, f)
     # gather the stats from all processes
     metric_logger.synchronize_between_processes()
