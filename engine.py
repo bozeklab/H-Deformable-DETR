@@ -194,7 +194,7 @@ def predict_prompts(prompts_paths, dataset_name, model, postprocessors):
     val_files = np.load(f'/data/pwojcik/PromptNucSeg/segmentor/datasets/{dataset_name}_val_files.npy')
     process_files(prompts_paths, val_files, model, postprocessors)
 
-SCORE_THRESHOLD = 0.350
+SCORE_THRESHOLD = 0.33
 
 
 def process_files(prompts_paths, files, model, postprocessors):
@@ -272,10 +272,10 @@ def evaluate(
     results_all = {}
     target_all = {}
 
-    #print('Starting to produce prompts')
-    #predict_prompts(prompts_paths='prompts_boxes', dataset_name='pannuke123',
-    #                model=model, postprocessors=postprocessors)
-    #print('Done')
+    print('Starting to produce prompts')
+    predict_prompts(prompts_paths='prompts_boxes', dataset_name='pannuke123',
+                    model=model, postprocessors=postprocessors)
+    print('Done')
 
     for samples, targets in metric_logger.log_every(data_loader, 10, header):
         #print(len(samples))
