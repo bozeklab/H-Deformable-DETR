@@ -225,7 +225,7 @@ def process_files(prompts_paths, files, model, postprocessors):
         save_content = np.concatenate([boxes, labels[:, None]], axis=-1)
         #print(save_content)
         np.save(
-            f'/data/pwojcik/PromptNucSeg/segmentor/prompts/pannuke123_boxes_035/{file.split("/")[-1][:-4]}',
+            f'/data/pwojcik/PromptNucSeg/segmentor/prompts/pannuke123_boxes/{file.split("/")[-1][:-4]}',
             save_content
         )
 
