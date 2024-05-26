@@ -233,7 +233,7 @@ def get_args_parser():
     # eval in training set
     parser.add_argument("--eval_in_training_set", default=False, action="store_true")
     # topk for eval
-    parser.add_argument("--topk", default=100, type=int)
+    parser.add_argument("--topk", default=250, type=int)
 
     # * training technologies
     parser.add_argument("--use_fp16", default=False, action="store_true")
