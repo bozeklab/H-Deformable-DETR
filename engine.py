@@ -272,10 +272,10 @@ def evaluate(
     results_all = {}
     target_all = {}
 
-    print('Starting to produce prompts')
-    predict_prompts(prompts_paths='prompts_boxes', dataset_name='pannuke123',
-                    model=model, postprocessors=postprocessors)
-    print('Done')
+    #print('Starting to produce prompts')
+    #predict_prompts(prompts_paths='prompts_boxes', dataset_name='pannuke123',
+    #                model=model, postprocessors=postprocessors)
+    #print('Done')
 
     for samples, targets in metric_logger.log_every(data_loader, 10, header):
         #print(len(samples))
@@ -322,8 +322,8 @@ def evaluate(
             image_id = targets[i]["image_id"].item()
             #print(targets[i]["labels"])
             im = img[i]
-            print('!!!')
-            print(im.shape)
+            #print('!!!')
+            #print(im.shape)
             scores = results[i]['scores'] >= 0.355
             boxes = results[i]['boxes'].clone()
             boxes_r = targets[i]['boxes'].clone()
@@ -340,7 +340,7 @@ def evaluate(
             drawn_boxes = draw_bounding_boxes(drawn_boxes, boxes_r, colors="blue")
             import torchvision.transforms.functional as TF
             image = TF.to_pil_image(drawn_boxes)
-            image.save(f'/data/pwojcik/detr_dump/img_{image_id}.png')
+            #image.save(f'/data/pwojcik/detr_dump/img_{image_id}.png')
         if coco_evaluator is not None:
             coco_evaluator.update(res)
 
@@ -356,13 +356,13 @@ def evaluate(
 
             panoptic_evaluator.update(res_pano)
     import pickle
-    print('!!!')
-    print(len(results_all.keys()))
+    #print('!!!')
+    #print(len(results_all.keys()))
 
-    with open('/data/pwojcik/detr_dump4/results.pkl', 'wb') as f:
-        pickle.dump(results_all, f)
-    with open('/data/pwojcik/detr_dump4/target.pkl', 'wb') as f:
-        pickle.dump(target_all, f)
+    #with open('/data/pwojcik/detr_dump4/results.pkl', 'wb') as f:
+    #    pickle.dump(results_all, f)
+    #with open('/data/pwojcik/detr_dump4/target.pkl', 'wb') as f:
+    #    pickle.dump(target_all, f)
     # gather the stats from all processes
     metric_logger.synchronize_between_processes()
     print("Averaged stats:", metric_logger)
